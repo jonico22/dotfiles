@@ -1,0 +1,3 @@
+# Enter ejecuta el comando incluso en modo multilínea
+ble-bind -f 'C-m' accept-line
+ble-bind -f 'RET' accept-line
