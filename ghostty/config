@@ -1,0 +1,29 @@
+keybind = ctrl+v=paste_from_clipboard
+
+# Tema (para ver todos: ghostty +list-themes)
+theme = Catppuccin Mocha
+background = #11111b
+background-opacity = 0.75
+
+# Fuente
+font-family = JetBrainsMono Nerd Font
+font-size = 13
+
+# Ventana
+window-padding-x = 10
+window-padding-y = 8
+background-opacity = 0.95
+window-decoration = true
+
+# Cursor
+cursor-style = bar
+cursor-style-blink = true
+
+# Integración con bash (cursor, título, saltos entre prompts)
+shell-integration = bash
+shell-integration-features = cursor,sudo,title
+
+# Varios
+copy-on-select = clipboard
+confirm-close-surface = false
+mouse-hide-while-typing = true
