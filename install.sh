@@ -2,6 +2,16 @@
 set -e
 sudo apt install -y git curl gawk fzf zoxide eza bat ripgrep fd-find bash-completion
 
+# Nerd Font
+if ! fc-list | grep -qi "JetBrainsMono Nerd"; then
+  mkdir -p ~/.local/share/fonts
+  wget -qO /tmp/JetBrainsMono.zip https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip
+  unzip -oq /tmp/JetBrainsMono.zip -d ~/.local/share/fonts/JetBrainsMono
+  fc-cache -f
+fi
+
+
+
 # Starship
 command -v starship >/dev/null || curl -sS https://starship.rs/install.sh | sh -s -- -y
 
