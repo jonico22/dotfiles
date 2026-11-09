@@ -9,10 +9,10 @@
 
 ## Nix
 ```bash
-nix search nixpkgs nombre          # buscar un paquete
-nix profile add nixpkgs#nombre     # instalar
-nix profile list                   # ver lo instalado
-nix profile remove nombre          # quitar
+nix search nixpkgs nombre          # buscar un paquete      (atajo: nixs nombre)
+nix profile add nixpkgs#nombre     # instalar              (atajo: nixi nombre)
+nix profile list                   # ver lo instalado      (atajo: nixl)
+nix profile remove nombre          # quitar                 (atajo: nixr nombre)
 ```
 
 ## Flatpak

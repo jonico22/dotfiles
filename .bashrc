@@ -120,10 +120,7 @@ fi
 export NIX_CONFIG='experimental-features = nix-command flakes'
 alias ghostty='nixGL ghostty'
 alias ver='celluloid'
-alias ver='celluloid'
 export PATH="$HOME/.local/bin:$PATH"
-export PNPM_HOME="$HOME/.local/share/pnpm"
-export PATH="$PNPM_HOME/bin:$PATH"
 export PNPM_HOME="$HOME/.local/share/pnpm"
 export PATH="$PNPM_HOME/bin:$PNPM_HOME:$PATH"
 

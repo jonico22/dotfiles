@@ -3,7 +3,7 @@
 ## lazygit
 Interfaz de git en la terminal. Con ella casi no necesitas memorizar comandos.
 ```bash
-lazygit     # ejecútalo dentro de un repositorio
+lazygit     # ejecútalo dentro de un repositorio (atajo: lg)
 ```
 | Tecla | Hace |
 |---|---|

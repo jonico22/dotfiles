@@ -7,6 +7,7 @@ FILES=(
   "$HOME/.bash_traductor:.bash_traductor"
   "$HOME/.bash_instalar:.bash_instalar"
   "$HOME/.bash_explorar:.bash_explorar"
+  "$HOME/.bash_aliases:.bash_aliases"
   "$HOME/.config/glow/estilo.json:glow/estilo.json"
   "$HOME/.config/ghostty/config:ghostty/config"
   "$HOME/.config/starship.toml:starship/starship.toml"

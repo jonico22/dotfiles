@@ -13,6 +13,7 @@ Mi configuración de terminal para desarrollo en Ubuntu.
 | `.bash_traductor` | `~/.bash_traductor` | Funciones `traducir` y `tr4` (Ollama) |
 | `.bash_instalar` | `~/.bash_instalar` | Funciones `instalar` y `desinstalar` |
 | `.bash_explorar` | `~/.bash_explorar` | Funciones `arbol`, `explorar` y `md` |
+| `.bash_aliases` | `~/.bash_aliases` | Alias cortos: `nixi`, `nixs`, `lg`, `agi`, `da`... |
 | `glow/estilo.json` | `~/.config/glow/estilo.json` | Estilo de glow para Markdown (sin los `#` en los títulos) |
 | `lazygit/config.yml` | `~/.config/lazygit/config.yml` | delta como pager |
 | `ulauncher/*.json` | `~/.config/ulauncher/` | Preferencias, atajos web y extensiones |

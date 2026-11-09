@@ -30,6 +30,19 @@ desinstalar nombre        # quita un paquete; si no es exacto, muestra coinciden
 ```
 Los `.AppImage` se copian a `~/Aplicaciones`. Si uno no abre, instala `libfuse2t64`.
 
+## Alias cortos
+Definidos en `.bash_aliases`.
+| Alias | Equivale a | Ejemplo |
+|---|---|---|
+| `nixi` | `nix profile add nixpkgs#...` | `nixi jq` |
+| `nixs` | `nix search nixpkgs` | `nixs ripgrep` |
+| `nixl` | `nix profile list` | `nixl` |
+| `nixr` | `nix profile remove` | `nixr jq` |
+| `lg` | `lazygit` | `lg` |
+| `agi` | `sudo apt install -y` | `agi unzip` |
+| `agu` | `sudo apt update && sudo apt upgrade -y` | `agu` |
+| `da` | `direnv allow` | `da` |
+
 ## Atajos
 | Atajo | Hace |
 |---|---|
