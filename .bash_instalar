@@ -1,0 +1,34 @@
+# Instalar programas descargados (.deb / .AppImage)
+instalar() {
+  local f="$1"
+  if [ -z "$f" ]; then
+    local dl; dl="$(xdg-user-dir DOWNLOAD 2>/dev/null || echo ~/Descargas)"
+    f="$(ls -t "$dl"/*.deb "$dl"/*.AppImage "$dl"/*.appimage 2>/dev/null | head -1)"
+    [ -z "$f" ] && { echo "No encontré .deb ni .AppImage en $dl"; return 1; }
+    read -rp "¿Instalar $(basename "$f")? [S/n] " r
+    [[ "$r" =~ ^[Nn]$ ]] && return 0
+  fi
+  [ -f "$f" ] || { echo "No existe: $f"; return 1; }
+  case "$f" in
+    *.deb)
+      sudo apt install -y "$(realpath "$f")" ;;
+    *.AppImage|*.appimage)
+      mkdir -p ~/Aplicaciones
+      local dest=~/Aplicaciones/"$(basename "$f")"
+      cp "$f" "$dest" && chmod +x "$dest"
+      echo "Listo: $dest"
+      echo "Ejecútalo con: $dest" ;;
+    *) echo "Formato no soportado: $f (solo .deb o .AppImage)" ;;
+  esac
+}
+
+# Desinstalar por nombre (busca coincidencias si no es exacto)
+desinstalar() {
+  [ -z "$1" ] && { echo "Uso: desinstalar <nombre>"; return 1; }
+  if dpkg -s "$1" &>/dev/null; then
+    sudo apt remove -y "$1"
+  else
+    echo "No hay un paquete llamado '$1'. Coincidencias:"
+    dpkg -l | awk '/^ii/ {print "  " $2}' | grep -i "$1" || echo "  (ninguna)"
+  fi
+}

@@ -1,0 +1,14 @@
+# Traductor con IA local (Ollama + TranslateGemma)
+_traducir() {
+  local modelo="$1" destino="${2:-Spanish}" texto
+  if [ -t 0 ]; then texto="$(wl-paste)"; else texto="$(cat)"; fi
+  if [ -z "$texto" ]; then echo "No hay texto (copia algo o usa: cat archivo | traducir)"; return 1; fi
+  ollama run "$modelo" "Translate the following text to ${destino}. Output only the translation.
+
+${texto}"
+}
+
+# Calidad (textos largos)
+traducir() { _traducir translategemma:12b "$@"; }
+# Rápido (frases cortas)
+tr4()      { _traducir translategemma:4b "$@"; }

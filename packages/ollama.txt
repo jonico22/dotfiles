@@ -1,0 +1,2 @@
+translategemma:4b
+translategemma:12b

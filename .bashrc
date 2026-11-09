@@ -150,4 +150,7 @@ alias gs='git status'
 alias gl='git log --oneline --graph --decorate -20'
 
 # ble.sh debe ir al final
+command -v direnv >/dev/null && eval "$(direnv hook bash)"
+[ -f ~/.bash_traductor ] && source ~/.bash_traductor
+[ -f ~/.bash_instalar ] && source ~/.bash_instalar
 [[ ! ${BLE_VERSION-} ]] || ble-attach
