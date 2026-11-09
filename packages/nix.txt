@@ -21,6 +21,5 @@ podman
 posting
 python3
 xh
-yazi
 yq-go
 yt-dlp

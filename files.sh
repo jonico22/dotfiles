@@ -6,6 +6,8 @@ FILES=(
   "$HOME/.blerc:.blerc"
   "$HOME/.bash_traductor:.bash_traductor"
   "$HOME/.bash_instalar:.bash_instalar"
+  "$HOME/.bash_explorar:.bash_explorar"
+  "$HOME/.config/glow/estilo.json:glow/estilo.json"
   "$HOME/.config/ghostty/config:ghostty/config"
   "$HOME/.config/starship.toml:starship/starship.toml"
   "$HOME/.config/lazygit/config.yml:lazygit/config.yml"

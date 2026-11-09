@@ -12,6 +12,8 @@ Mi configuración de terminal para desarrollo en Ubuntu.
 | `.blerc` | `~/.blerc` | Enter ejecuta incluso en modo multilínea |
 | `.bash_traductor` | `~/.bash_traductor` | Funciones `traducir` y `tr4` (Ollama) |
 | `.bash_instalar` | `~/.bash_instalar` | Funciones `instalar` y `desinstalar` |
+| `.bash_explorar` | `~/.bash_explorar` | Funciones `arbol`, `explorar` y `md` |
+| `glow/estilo.json` | `~/.config/glow/estilo.json` | Estilo de glow para Markdown (sin los `#` en los títulos) |
 | `lazygit/config.yml` | `~/.config/lazygit/config.yml` | delta como pager |
 | `ulauncher/*.json` | `~/.config/ulauncher/` | Preferencias, atajos web y extensiones |
 | `direnv/direnvrc` | `~/.config/direnv/direnvrc` | Activa nix-direnv |
@@ -63,7 +65,6 @@ Herramientas CLI y apps instaladas con Nix (ver `packages/nix.txt`):
 | posting | Cliente de APIs en la terminal, tipo Postman (`posting`) |
 | hurl | Guardar endpoints en archivos `.hurl` y ejecutarlos (`hurl archivo.hurl`) |
 | just | Guardar los comandos del proyecto en un `justfile` (`just dev`, `just test`) |
-| yazi | Explorador de archivos en la terminal, con vista previa de imágenes, código y PDFs |
 | glow | Leer Markdown con formato en la terminal (`glow CLAUDE.md`) |
 | lazydocker | Lo mismo que lazygit, pero para contenedores Docker |
 | hyperfine | Medir y comparar la velocidad de comandos |
@@ -97,6 +98,8 @@ Si alguna app gráfica de Nix abre con errores de OpenGL, ejecútala con `nixGL 
 
 ## 📖 Cómo usar las utilidades
 
+> Guía completa por categorías, con ejemplos: **[docs/](docs/README.md)**.
+
 ### Navegar y buscar
 | Herramienta | Ejemplo |
 |---|---|
@@ -104,7 +107,7 @@ Si alguna app gráfica de Nix abre con errores de OpenGL, ejecútala con `nixGL 
 | **fzf** | `Ctrl+R` historial, `Ctrl+T` archivos, `Alt+C` carpetas |
 | **ripgrep** | `rg "texto"` busca en todos los archivos de la carpeta |
 | **fd** | `fd nombre` busca archivos por nombre (alias de `fdfind`) |
-| **yazi** | `yazi` explorador de archivos; `q` sale, `Enter` abre, `h/l` sube/baja de carpeta |
+| **arbol / explorar** | `arbol` muestra el árbol de carpetas; `explorar` busca archivos y previsualiza (Markdown con formato, código con colores) |
 | **eza / bat** | `ls`, `ll`, `tree` y `cat` ya usan estas herramientas por alias |
 
 ### Git

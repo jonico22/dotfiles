@@ -153,4 +153,5 @@ alias gl='git log --oneline --graph --decorate -20'
 command -v direnv >/dev/null && eval "$(direnv hook bash)"
 [ -f ~/.bash_traductor ] && source ~/.bash_traductor
 [ -f ~/.bash_instalar ] && source ~/.bash_instalar
+[ -f ~/.bash_explorar ] && source ~/.bash_explorar
 [[ ! ${BLE_VERSION-} ]] || ble-attach
