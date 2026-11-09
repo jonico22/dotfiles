@@ -115,6 +115,31 @@ Si alguna app gráfica de Nix abre con errores de OpenGL, ejecútala con `nixGL 
 | **meld** | `meld carpetaA carpetaB` compara; `git mergetool` lo usa para conflictos |
 | **gh** | `gh repo clone usuario/repo`, `gh pr create` |
 
+#### Ejemplo de `~/.gitconfig`
+
+Mi `.gitconfig` es personal y no está en el repo. Este es un ejemplo con delta, para copiar y cambiar tus datos:
+
+```ini
+[user]
+	name = Tu Nombre
+	email = tu@correo.com
+[core]
+	pager = delta
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true
+	line-numbers = true
+	side-by-side = true
+[merge]
+	conflictStyle = zdiff3
+	tool = meld
+[mergetool]
+	prompt = false
+```
+
+Para que `git push` use tu cuenta de GitHub: `gh auth login`.
+
 ### Datos y APIs
 | Herramienta | Ejemplo |
 |---|---|
