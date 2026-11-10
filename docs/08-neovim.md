@@ -25,7 +25,7 @@ Config en `nvim/` del repo (`lua/plugins/` para añadir plugins). Tema: Catppucc
 ### Como un editor gráfico
 | Atajo | Acción |
 |---|---|
-| `Ctrl+P` | Abrir archivo por nombre |
+| `Ctrl+P` | Abrir archivo por nombre (solo en modo normal; al escribir, `Ctrl+p` sigue siendo la sugerencia anterior) |
 | `Ctrl+B` | Mostrar/ocultar el explorador |
 | `Ctrl+S` | Guardar |
 | `Alt+j` / `Alt+k` | Mover la línea abajo / arriba |
