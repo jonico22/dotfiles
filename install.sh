@@ -58,8 +58,11 @@ fi
 
 # --- Ollama (los modelos pesan GB: se pregunta) ---
 command -v ollama >/dev/null || curl -fsSL https://ollama.com/install.sh | sh
-if command -v ollama >/dev/null && pregunta "¿Descargar los modelos de Ollama (translategemma:12b 8 GB y :4b 3.3 GB)?"; then
-  grep -vE '^\s*(#|$)' packages/ollama.txt | xargs -rn1 ollama pull
+if command -v ollama >/dev/null; then
+  # packages/ollama.txt: "modelo  # tamaño". Se pregunta por cada uno.
+  grep -vE '^\s*(#|$)' packages/ollama.txt | while read -r m _ tam; do
+    pregunta "¿Descargar $m ($tam)?" < /dev/tty && ollama pull "$m" < /dev/null
+  done || true
 fi
 
 # --- Nix ---
@@ -69,9 +72,13 @@ if command -v nix >/dev/null; then
   if [ -n "$faltan" ]; then
     echo "Paquetes Nix que faltan:"; echo "$faltan"
     if pregunta "¿Instalarlos?"; then
-      for p in $faltan; do nix profile install "nixpkgs#$p" || echo "Aviso: falló $p"; done
+      # NIXPKGS_ALLOW_UNFREE: docling depende de un paquete no libre (saxonche)
+      for p in $faltan; do NIXPKGS_ALLOW_UNFREE=1 nix profile install --impure "nixpkgs#$p" || echo "Aviso: falló $p"; done
     fi
   fi
+  # markitdown con soporte de PDF/Word/PowerPoint/Excel (el de nixpkgs viene sin esos extras)
+  command -v markitdown >/dev/null || nix profile add --impure --file packages/markitdown.nix \
+    || echo "Aviso: falló markitdown"
 else
   echo "Aviso: Nix no está instalado; se omiten los paquetes Nix (https://nixos.org/download)."
 fi

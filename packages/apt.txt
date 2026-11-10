@@ -19,3 +19,6 @@ wget
 copyq
 libfuse2t64
 gnome-shell-extension-manager
+ffmpeg
+poppler-utils
+ghostscript

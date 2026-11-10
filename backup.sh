@@ -26,9 +26,9 @@ fi
 # Listas de paquetes
 mkdir -p packages
 command -v nix >/dev/null && nix profile list --json 2>/dev/null \
-  | python3 -c "import json,sys; e=json.load(sys.stdin)['elements']; print('\n'.join(sorted(e) if isinstance(e,dict) else sorted(x.get('attrPath','').split('.')[-1] for x in e)))" > packages/nix.txt
+  | python3 -c "import json,sys; e=json.load(sys.stdin)['elements']; print('\n'.join(sorted(k for k,v in e.items() if v.get('attrPath')) if isinstance(e,dict) else sorted(x['attrPath'].split('.')[-1] for x in e if x.get('attrPath'))))" > packages/nix.txt
 command -v flatpak >/dev/null && flatpak list --app --columns=application > packages/flatpak.txt
-command -v ollama >/dev/null && ollama list | awk 'NR>1{print $1}' > packages/ollama.txt
+command -v ollama >/dev/null && ollama list | awk 'NR>1{print $1"  # "$3" "$4}' | sort > packages/ollama.txt
 # apt.txt se mantiene a mano
 
 git add .

@@ -40,7 +40,9 @@ Mi configuración de terminal para desarrollo en Ubuntu.
 | [fd](https://github.com/sharkdp/fd) | Búsqueda rápida de archivos |
 
 | [Ulauncher](https://ulauncher.io) | Lanzador de apps (Shift+Espacio) |
-| [Ollama](https://ollama.com) | Modelos locales (translategemma) para traducir |
+| [Ollama](https://ollama.com) | Modelos locales: traducir (translategemma), autocompletar (qwen2.5-coder), OCR (glm-ocr) e imágenes (gemma4:e4b). Ver [docs/09](docs/09-ia-local-y-conversion.md) |
+| gawk, bash-completion, translate-shell, wl-clipboard, unzip, wget, gnome-shell-extension-manager (apt) | Soporte: ble.sh, autocompletado, `traducir` (portapapeles), descargas y extensiones de GNOME |
+| ffmpeg, poppler-utils, ghostscript (apt) | Convertir audio/vídeo, extraer texto de PDFs y comprimirlos |
 | [delta](https://github.com/dandavison/delta) | Diffs de git con colores y lado a lado |
 | [direnv](https://direnv.net) | Carga el entorno de cada proyecto (`.envrc`) |
 | [herdr](https://github.com/herdrdev/herdr) | Multiplexor de terminal con estado de agentes (instalador oficial, `~/.local/bin`) |
@@ -58,6 +60,14 @@ Mi configuración de terminal para desarrollo en Ubuntu.
 | mpv, yt-dlp | Reproductor y descargador de video |
 | neovim, gcc, tree-sitter, nil, nixfmt | Neovim (LazyVim) y lo que necesita: compilador, parsers, LSP y formato de Nix |
 | lapce | Editor de código |
+| imagemagick | Convertir y redimensionar imágenes (`magick`) |
+| pandoc | Convertir entre Markdown, Word, HTML y PDF |
+| docling | Convierte PDFs con tablas, columnas y fórmulas a Markdown (usa modelos de visión; ~1,4 GB de RAM, ~8 s por página con CPU). Requiere `NIXPKGS_ALLOW_UNFREE=1` y `--impure` (depende de un paquete no libre); `install.sh` ya lo hace |
+| markitdown | Convierte PDF, Word, Excel y PowerPoint a Markdown. Se instala con `packages/markitdown.nix` (el de nixpkgs viene sin soporte de PDF/Office) |
+| qpdf | Unir, dividir y proteger PDFs |
+| ocrmypdf + tesseract | OCR sin IA: vuelve buscable un PDF escaneado (incluye español) |
+| exiftool | Ver y borrar metadatos de fotos y archivos |
+| _7zz, unar | Abrir ZIP, 7z, RAR y otros comprimidos (comando `7zz`) |
 | nixGL | Ejecutar apps gráficas de Nix (se instala aparte: `github:nix-community/nixGL`) |
 
 Herramientas CLI y apps instaladas con Nix (ver `packages/nix.txt`):
@@ -101,6 +111,7 @@ Si alguna app gráfica de Nix abre con errores de OpenGL, ejecútala con `nixGL 
 | `traducir`, `tr4` | Traducir el portapapeles (modelo 12b / 4b) |
 | `instalar`, `desinstalar` | Instalar/quitar `.deb` o `.AppImage` |
 | `Ctrl+P` / `Ctrl+B` (en nvim) | Abrir archivo / explorador |
+| `ollama run glm-ocr "Text Recognition: ./img.png"` | Leer el texto de una imagen (OCR local) |
 | `v` / `h` | Neovim / herdr (`Ctrl+a` es el prefijo; ver [docs/08](docs/08-neovim.md)) |
 
 ## 📖 Cómo usar las utilidades
@@ -220,3 +231,9 @@ Tactile y Auto Move Windows se instalan desde el Gestor de extensiones (no está
 - **Ulauncher en Wayland:** su propio atajo no funciona; se usa un atajo de GNOME que ejecuta `ulauncher-toggle`.
 - **AppImage que no abre:** instalar `libfuse2t64`.
 - **Shift+Espacio** deja de escribir espacio en todas las apps.
+- **venv con el Python de Nix:** las librerías compiladas (numpy, onnxruntime...) fallan con
+  `libstdc++.so.6: cannot open shared object file`. Se arregla con
+  `export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu` al ejecutar.
+- **`install.sh` y Ollama:** pregunta modelo por modelo (en total pesan ~22 GB); la lista con tamaños está en `packages/ollama.txt`.
+- **markitdown:** no instalarlo con `nix profile add nixpkgs#markitdown` (falla con PDF y Word). Usa `nix profile add --impure --file packages/markitdown.nix`; `install.sh` ya lo hace. Con tablas en PDF sale peor que `pdftotext -layout`.
+- **docling:** la primera vez descarga ~0,5 GB de modelos a `~/.cache/huggingface`. En mi prueba (un PDF sencillo generado con LibreOffice) no detectó las tablas; úsalo solo con PDFs complejos y compáralo con `pdftotext -layout`.

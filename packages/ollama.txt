@@ -1,2 +1,5 @@
-translategemma:4b
-translategemma:12b
+gemma4:e4b  # 6.6 GB
+glm-ocr:latest  # 2.7 GB
+qwen2.5-coder:1.5b  # 986 MB
+translategemma:12b  # 8.1 GB
+translategemma:4b  # 3.3 GB

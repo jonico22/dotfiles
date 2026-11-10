@@ -13,6 +13,7 @@ Cada una dice **qué hace** y trae los **ejemplos que más se usan**.
 | [6. Comandos propios y atajos](06-propios-y-atajos.md) | `traducir`, `tr4`, `instalar`, `desinstalar`, atajos |
 | [7. Instalar programas](07-instalar-programas.md) | `nix`, `flatpak`, `apt` y los scripts del repo |
 | [8. Neovim y herdr](08-neovim.md) | `nvim` (LazyVim), `herdr`, atajos |
+| [9. IA local y conversión](09-ia-local-y-conversion.md) | Modelos de Ollama (código, OCR, imágenes), `ffmpeg`, `pandoc`, `qpdf`, `ocrmypdf` |
 
 ## Resumen rápido
 
@@ -29,6 +30,8 @@ Cada una dice **qué hace** y trae los **ejemplos que más se usan**.
 | Ver qué ocupa espacio | `dust` |
 | Ver ejemplos de un comando | `tldr comando` |
 | Traducir lo que copié | `traducir` |
+| Leer el texto de una imagen / PDF escaneado | `ollama run glm-ocr` / `ocrmypdf -l spa` |
+| Convertir vídeo, imagen o documento | `ffmpeg`, `magick`, `pandoc` ([guía 9](09-ia-local-y-conversion.md)) |
 | Instalar un .deb descargado | `instalar` |
 | Editar código en la terminal | `v` (Neovim) |
 | Dividir la terminal / agentes | `h` (herdr) |

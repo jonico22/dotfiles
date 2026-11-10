@@ -1,7 +1,10 @@
+_7zz
 dbeaver-bin
 direnv
+docling
 duf
 dust
+exiftool
 gcc
 gh
 git
@@ -22,11 +25,16 @@ nix-direnv
 nixGL
 nixfmt
 nodejs
+ocrmypdf
+pandoc
 pnpm
 podman
 posting
 python3
+qpdf
+tesseract
 tree-sitter
+unar
 xh
 yq-go
 yt-dlp
