@@ -1,3 +1,4 @@
+onboarding = false
 # herdr: multiplexor con agentes. Recargar: herdr server reload-config
 [keys]
 prefix = "ctrl+a"

@@ -1,0 +1,12 @@
+# Reglas de markdownlint demasiado estrictas para estos docs (se carga en nvim)
+config:
+  MD010: false  # tabs en bloques de código (.gitconfig)
+  MD013: false  # largo de línea
+  MD022: false  # líneas en blanco alrededor de títulos
+  MD031: false
+  MD032: false
+  MD033: false  # HTML en línea
+  MD036: false
+  MD041: false
+  MD058: false  # líneas en blanco alrededor de tablas
+  MD060: false  # estilo de columnas en tablas

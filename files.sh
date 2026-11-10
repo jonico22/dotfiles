@@ -26,6 +26,7 @@ FILES=(
   "$HOME/.config/nvim/lua/plugins/nix.lua:nvim/lua/plugins/nix.lua"
   "$HOME/.config/nvim/lazy-lock.json:nvim/lazy-lock.json"
   "$HOME/.config/herdr/config.toml:herdr/config.toml"
+  "$HOME/.markdownlint-cli2.yaml:.markdownlint-cli2.yaml"
 )
 # Rutas dconf a versionar (gnome/<nombre>.ini)
 GNOME_PATHS=(
