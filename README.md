@@ -14,7 +14,7 @@ Mi configuración de terminal para desarrollo en Ubuntu.
 | `.bash_instalar` | `~/.bash_instalar` | Funciones `instalar` y `desinstalar` |
 | `.bash_explorar` | `~/.bash_explorar` | Funciones `arbol`, `explorar` y `md` |
 | `.bash_aliases` | `~/.bash_aliases` | Alias cortos: `nixi`, `nixs`, `lg`, `agi`, `da`... |
-| `nvim/` | `~/.config/nvim/` | Neovim con LazyVim (LSP, buscador, git; Catppuccin) |
+| `nvim/` | `~/.config/nvim/` | Neovim con LazyVim (LSP, buscador, git, diffview, Claude Code; Catppuccin) |
 | `herdr/config.toml` | `~/.config/herdr/config.toml` | herdr: paneles, sesiones y agentes (prefijo `Ctrl+a`) |
 | `glow/estilo.json` | `~/.config/glow/estilo.json` | Estilo de glow para Markdown (sin los `#` en los títulos) |
 | `lazygit/config.yml` | `~/.config/lazygit/config.yml` | delta como pager |
@@ -100,6 +100,7 @@ Si alguna app gráfica de Nix abre con errores de OpenGL, ejecútala con `nixGL 
 | `Super+flechas` | Tiling Assistant |
 | `traducir`, `tr4` | Traducir el portapapeles (modelo 12b / 4b) |
 | `instalar`, `desinstalar` | Instalar/quitar `.deb` o `.AppImage` |
+| `Ctrl+P` / `Ctrl+B` (en nvim) | Abrir archivo / explorador |
 | `v` / `h` | Neovim / herdr (`Ctrl+a` es el prefijo; ver [docs/08](docs/08-neovim.md)) |
 
 ## 📖 Cómo usar las utilidades

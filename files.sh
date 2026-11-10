@@ -24,6 +24,7 @@ FILES=(
   "$HOME/.config/nvim/lua/config/autocmds.lua:nvim/lua/config/autocmds.lua"
   "$HOME/.config/nvim/lua/plugins/colorscheme.lua:nvim/lua/plugins/colorscheme.lua"
   "$HOME/.config/nvim/lua/plugins/nix.lua:nvim/lua/plugins/nix.lua"
+  "$HOME/.config/nvim/lua/plugins/diffview.lua:nvim/lua/plugins/diffview.lua"
   "$HOME/.config/nvim/lazy-lock.json:nvim/lazy-lock.json"
   "$HOME/.config/herdr/config.toml:herdr/config.toml"
   "$HOME/.markdownlint-cli2.yaml:.markdownlint-cli2.yaml"

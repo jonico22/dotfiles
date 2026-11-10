@@ -22,6 +22,39 @@ La primera vez descarga los plugins solo; los servidores de lenguajes (TypeScrip
 Comandos útiles: `:LazyExtras` (activar lenguajes), `:Mason` (servidores), `:Lazy` (plugins), `:checkhealth`.
 Config en `nvim/` del repo (`lua/plugins/` para añadir plugins). Tema: Catppuccin Mocha con fondo transparente.
 
+### Como un editor gráfico
+| Atajo | Acción |
+|---|---|
+| `Ctrl+P` | Abrir archivo por nombre |
+| `Ctrl+B` | Mostrar/ocultar el explorador |
+| `Ctrl+S` | Guardar |
+| `Alt+j` / `Alt+k` | Mover la línea abajo / arriba |
+| `Ctrl+/` | Terminal flotante |
+| `gcc` | Comentar la línea |
+| `Shift+h` / `Shift+l` | Pestaña anterior / siguiente |
+| `Espacio o` | Esquema de símbolos (funciones del archivo) |
+
+La ruta del archivo y la función actual se ven arriba (navic), y el nombre de la función o clase actual se queda fijo al desplazarte.
+
+### Diffview (diffs y historial de git)
+| Atajo | Acción |
+|---|---|
+| `Espacio g d` | Ver todos los cambios sin confirmar, archivo por archivo |
+| `Espacio g h` | Historial del archivo actual |
+| `Espacio g H` | Historial de todo el repo |
+| `Espacio g q` | Cerrar Diffview |
+
+En la lista de archivos: `Enter` abre el diff, `-` hace stage/unstage y `Tab` pasa al siguiente archivo.
+
+### Claude Code dentro de Neovim
+| Atajo | Acción |
+|---|---|
+| `Espacio a c` | Abrir/cerrar Claude en un panel |
+| `Espacio a b` | Enviar el archivo actual |
+| `Espacio a s` | (en selección visual) enviar el texto elegido |
+| `Espacio a a` / `Espacio a d` | Aceptar / rechazar el diff que propone |
+| `Espacio a r` | Reanudar la conversación anterior |
+
 ### Vista previa (Markdown e imágenes)
 | Qué | Cómo |
 |---|---|
@@ -31,6 +64,33 @@ Config en `nvim/` del repo (`lua/plugins/` para añadir plugins). Tema: Catppucc
 | Ver imágenes y archivos al buscar | `Espacio Espacio` y navega: el panel derecho es la vista previa |
 
 Las imágenes necesitan `imagemagick` y `gs` (en `packages/nix.txt`). Dentro de herdr pueden no dibujarse; si pasa, ábrelas en una ventana de Ghostty fuera de herdr.
+
+### Plugins instalados
+Los trae LazyVim (base) más los extras de `nvim/lazyvim.json` y los de `nvim/lua/plugins/`.
+
+| Plugin | Para qué | Atajo principal |
+|---|---|---|
+| snacks.nvim | Buscador, explorador, dashboard e imágenes | `Espacio Espacio`, `Espacio e`, `Ctrl+P`, `Ctrl+B` |
+| catppuccin | Tema Mocha con fondo transparente | — |
+| mason.nvim + lspconfig | Instala y conecta los servidores de lenguajes | `:Mason` |
+| blink.cmp | Autocompletado | `Ctrl+y` acepta, `Ctrl+Space` abre |
+| conform + nvim-lint | Formatear al guardar y avisos de código (prettier, eslint, ruff, shfmt, nixfmt) | `Espacio c f` |
+| treesitter | Resaltado y estructura del código | — |
+| gitsigns + lazygit | Cambios en el margen y git completo | `Espacio g g` |
+| **diffview** | Diffs e historial de git en pantalla completa | `Espacio g d` / `g h` / `g H` / `g q` |
+| **claudecode.nvim** | Claude Code en un panel de Neovim | `Espacio a c` |
+| **aerial** | Esquema de símbolos del archivo | `Espacio o` |
+| **navic** | Ruta de la función actual en la barra superior | — |
+| **illuminate** | Resalta otras apariciones de la palabra bajo el cursor | `]]` / `[[` saltan entre ellas |
+| **treesitter-context** | Deja fija la función o clase actual arriba | — |
+| render-markdown | Markdown con formato dentro de Neovim | `Espacio u m` |
+| markdown-preview | Vista previa en el navegador | `Espacio c p` |
+| inc-rename | Renombrar con vista en vivo | `Espacio c r` |
+| mini.surround | Rodear texto con comillas/paréntesis | `gsa` añadir, `gsd` quitar, `gsr` cambiar |
+| trouble, todo-comments | Lista de errores y de TODO | `Espacio x x`, `Espacio s t` |
+
+Lenguajes activados: TypeScript, Tailwind, JSON, Python, Nix, Markdown, YAML y Docker. Añadir otro: `:LazyExtras`.
+Los plugins en **negrita** son los últimos que agregamos. Versiones fijas en `nvim/lazy-lock.json`; actualizar con `:Lazy update` y luego `backup.sh`.
 
 ## herdr (paneles, sesiones y agentes)
 Multiplexor tipo tmux que además muestra el estado de agentes como Claude Code. Se abre con `h`.
