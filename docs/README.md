@@ -12,6 +12,7 @@ Cada una dice **qué hace** y trae los **ejemplos que más se usan**.
 | [5. Sistema](05-sistema.md) | `btop`, `dust`, `duf`, `hyperfine`, `glow`, `tldr` |
 | [6. Comandos propios y atajos](06-propios-y-atajos.md) | `traducir`, `tr4`, `instalar`, `desinstalar`, atajos |
 | [7. Instalar programas](07-instalar-programas.md) | `nix`, `flatpak`, `apt` y los scripts del repo |
+| [8. Neovim y herdr](08-neovim.md) | `nvim` (LazyVim), `herdr`, atajos |
 
 ## Resumen rápido
 
@@ -29,5 +30,7 @@ Cada una dice **qué hace** y trae los **ejemplos que más se usan**.
 | Ver ejemplos de un comando | `tldr comando` |
 | Traducir lo que copié | `traducir` |
 | Instalar un .deb descargado | `instalar` |
+| Editar código en la terminal | `v` (Neovim) |
+| Dividir la terminal / agentes | `h` (herdr) |
 
 > Si no recuerdas cómo se usa algo: `tldr <comando>` o `<comando> --help`.

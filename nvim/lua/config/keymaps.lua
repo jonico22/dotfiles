@@ -1,0 +1,1 @@
+-- Atajos propios (se suman a los de LazyVim)

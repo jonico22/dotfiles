@@ -16,6 +16,16 @@ FILES=(
   "$HOME/.config/ulauncher/shortcuts.json:ulauncher/shortcuts.json"
   "$HOME/.config/ulauncher/extensions.json:ulauncher/extensions.json"
   "$HOME/.config/direnv/direnvrc:direnv/direnvrc"
+  "$HOME/.config/nvim/init.lua:nvim/init.lua"
+  "$HOME/.config/nvim/lazyvim.json:nvim/lazyvim.json"
+  "$HOME/.config/nvim/lua/config/lazy.lua:nvim/lua/config/lazy.lua"
+  "$HOME/.config/nvim/lua/config/options.lua:nvim/lua/config/options.lua"
+  "$HOME/.config/nvim/lua/config/keymaps.lua:nvim/lua/config/keymaps.lua"
+  "$HOME/.config/nvim/lua/config/autocmds.lua:nvim/lua/config/autocmds.lua"
+  "$HOME/.config/nvim/lua/plugins/colorscheme.lua:nvim/lua/plugins/colorscheme.lua"
+  "$HOME/.config/nvim/lua/plugins/nix.lua:nvim/lua/plugins/nix.lua"
+  "$HOME/.config/nvim/lazy-lock.json:nvim/lazy-lock.json"
+  "$HOME/.config/herdr/config.toml:herdr/config.toml"
 )
 # Rutas dconf a versionar (gnome/<nombre>.ini)
 GNOME_PATHS=(

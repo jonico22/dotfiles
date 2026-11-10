@@ -34,6 +34,9 @@ command -v mise >/dev/null || curl -fsS https://mise.run | sh
 # --- Zed (instalador oficial) ---
 command -v zed >/dev/null || curl -f https://zed.dev/install.sh | sh
 
+# --- herdr (multiplexor de terminal con agentes; binario oficial con checksum) ---
+command -v herdr >/dev/null || curl -fsSL https://herdr.dev/install.sh | sh
+
 # --- Bruno (.deb oficial; la versión de Nix falla por el sandbox de Electron) ---
 if ! command -v bruno >/dev/null; then
   v=$(curl -fsSL https://api.github.com/repos/usebruno/bruno/releases/latest | grep -m1 '"tag_name"' | cut -d'"' -f4)

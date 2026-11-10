@@ -15,3 +15,7 @@ alias agu='sudo apt update && sudo apt upgrade -y'
 
 # direnv
 alias da='direnv allow'
+
+# Editor y multiplexor
+alias v='nvim'
+alias h='herdr'

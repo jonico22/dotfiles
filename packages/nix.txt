@@ -2,6 +2,7 @@ dbeaver-bin
 direnv
 duf
 dust
+gcc
 gh
 git
 glow
@@ -14,12 +15,17 @@ lazydocker
 lazygit
 meld
 mpv
+neovim
+nil
 nix-direnv
+nixGL
+nixfmt
 nodejs
 pnpm
 podman
 posting
 python3
+tree-sitter
 xh
 yq-go
 yt-dlp

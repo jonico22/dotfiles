@@ -14,6 +14,8 @@ Mi configuración de terminal para desarrollo en Ubuntu.
 | `.bash_instalar` | `~/.bash_instalar` | Funciones `instalar` y `desinstalar` |
 | `.bash_explorar` | `~/.bash_explorar` | Funciones `arbol`, `explorar` y `md` |
 | `.bash_aliases` | `~/.bash_aliases` | Alias cortos: `nixi`, `nixs`, `lg`, `agi`, `da`... |
+| `nvim/` | `~/.config/nvim/` | Neovim con LazyVim (LSP, buscador, git; Catppuccin) |
+| `herdr/config.toml` | `~/.config/herdr/config.toml` | herdr: paneles, sesiones y agentes (prefijo `Ctrl+a`) |
 | `glow/estilo.json` | `~/.config/glow/estilo.json` | Estilo de glow para Markdown (sin los `#` en los títulos) |
 | `lazygit/config.yml` | `~/.config/lazygit/config.yml` | delta como pager |
 | `ulauncher/*.json` | `~/.config/ulauncher/` | Preferencias, atajos web y extensiones |
@@ -41,6 +43,7 @@ Mi configuración de terminal para desarrollo en Ubuntu.
 | [Ollama](https://ollama.com) | Modelos locales (translategemma) para traducir |
 | [delta](https://github.com/dandavison/delta) | Diffs de git con colores y lado a lado |
 | [direnv](https://direnv.net) | Carga el entorno de cada proyecto (`.envrc`) |
+| [herdr](https://github.com/herdrdev/herdr) | Multiplexor de terminal con estado de agentes (instalador oficial, `~/.local/bin`) |
 | [Zed](https://zed.dev) | Editor de código rápido (instalador oficial, en `~/.local/zed.app`) |
 | [Bruno](https://www.usebruno.com) | Cliente de APIs gráfico (.deb oficial; la versión de Nix falla por el sandbox) |
 | CopyQ, btop, tealdeer (`tldr`), Dialect (Flatpak) | Portapapeles, monitor, ayuda rápida, traductor gráfico |
@@ -53,6 +56,7 @@ Mi configuración de terminal para desarrollo en Ubuntu.
 | nodejs, pnpm, python3 | Lenguajes y gestor de paquetes |
 | podman | Contenedores |
 | mpv, yt-dlp | Reproductor y descargador de video |
+| neovim, gcc, tree-sitter, nil, nixfmt | Neovim (LazyVim) y lo que necesita: compilador, parsers, LSP y formato de Nix |
 | lapce | Editor de código |
 | nixGL | Ejecutar apps gráficas de Nix (se instala aparte: `github:nix-community/nixGL`) |
 
@@ -96,6 +100,7 @@ Si alguna app gráfica de Nix abre con errores de OpenGL, ejecútala con `nixGL 
 | `Super+flechas` | Tiling Assistant |
 | `traducir`, `tr4` | Traducir el portapapeles (modelo 12b / 4b) |
 | `instalar`, `desinstalar` | Instalar/quitar `.deb` o `.AppImage` |
+| `v` / `h` | Neovim / herdr (`Ctrl+a` es el prefijo; ver [docs/08](docs/08-neovim.md)) |
 
 ## 📖 Cómo usar las utilidades
 
