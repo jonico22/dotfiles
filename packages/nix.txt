@@ -1,4 +1,5 @@
 _7zz
+codex
 dbeaver-bin
 direnv
 docling

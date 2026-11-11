@@ -57,6 +57,7 @@ Mi configuración de terminal para desarrollo en Ubuntu.
 | Paquete | Para qué |
 |---|---|
 | gh, git, lazygit | GitHub CLI, git, interfaz git en terminal |
+| codex | Codex CLI de OpenAI (agente de código en la terminal; usa la sesión de la app de ChatGPT en `~/.codex`). Actualizar: `nix profile upgrade codex` |
 | nodejs, pnpm, python3 | Lenguajes y gestor de paquetes |
 | podman | Contenedores |
 | mpv, yt-dlp | Reproductor y descargador de video |
