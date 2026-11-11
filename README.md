@@ -95,6 +95,19 @@ Herramientas CLI y apps instaladas con Nix (ver `packages/nix.txt`):
 
 Si alguna app gráfica de Nix abre con errores de OpenGL, ejecútala con `nixGL <app>`.
 
+## 🤖 Agentes de IA en la terminal
+
+| Comando | Proveedor | Instalación | Actualizar |
+|---|---|---|---|
+| `claude` | Anthropic (Claude Code) | Instalador nativo (`~/.local/bin`) | Solo |
+| `codex` | OpenAI (Codex CLI) | Nix | `nix profile upgrade codex` |
+| `agy` | Google (Antigravity CLI) | Instalador oficial (`~/.local/bin`) | Solo |
+| `opencode` | Varios proveedores (OpenCode 1) | Instalador oficial (`~/.opencode/bin`) | `opencode upgrade` |
+
+- Ninguno usa sudo, y `install.sh` instala los cuatro.
+- **Gemini CLI no se instala:** desde el 18-06-2026 la cuenta gratuita y los planes Google AI Pro/Ultra solo funcionan en `agy`.
+- **Primera vez:** `codex` usa la sesión de la app de ChatGPT; `agy` pide iniciar sesión con Google; `opencode` trae modelos gratis y con `opencode auth login` se agregan otros proveedores.
+
 ## ⌨️ Atajos y alias
 
 | Comando / Atajo | Acción |
