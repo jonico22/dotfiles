@@ -44,9 +44,10 @@ if ! command -v agy >/dev/null; then
   sed -i '/^# Added by Antigravity CLI installer$/,+1d' ~/.bashrc ~/.profile 2>/dev/null || true
 fi
 
-# --- OpenCode 2 (instalador oficial en ~/.opencode/bin; se enlaza en ~/.local/bin para no tocar .bashrc) ---
+# --- OpenCode 1 (instalador oficial en ~/.opencode/bin; se enlaza en ~/.local/bin para no tocar .bashrc).
+#     La versión 2 (opencode.ai/v2/install) aún tiene fallos; para pasar a ella: opencode upgrade --major ---
 if ! command -v opencode >/dev/null; then
-  curl -fsSL https://opencode.ai/v2/install | bash -s -- --no-modify-path \
+  curl -fsSL https://opencode.ai/install | bash -s -- --no-modify-path \
     && ln -sfn ~/.opencode/bin/opencode ~/.local/bin/opencode || echo "Aviso: falló OpenCode"
 fi
 

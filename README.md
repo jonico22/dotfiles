@@ -49,7 +49,7 @@ Mi configuración de terminal para desarrollo en Ubuntu.
 | [direnv](https://direnv.net) | Carga el entorno de cada proyecto (`.envrc`) |
 | [Claude Code](https://claude.com/claude-code) | Agente de IA en la terminal (instalador nativo, `~/.local/bin`; sin sudo y se actualiza solo. No instalar con npm/pnpm: no se actualiza) |
 | [Antigravity CLI](https://antigravity.google) | Agente de IA de Google en la terminal (`agy`; instalador oficial en `~/.local/bin`, sin sudo). La primera vez pide iniciar sesión con Google |
-| [OpenCode](https://opencode.ai) | Agente de código en la terminal que acepta varios proveedores (Anthropic, OpenAI, Google, modelos gratis). Versión 2, instalador oficial en `~/.opencode/bin` enlazado en `~/.local/bin`. Actualizar: `opencode upgrade` |
+| [OpenCode](https://opencode.ai) | Agente de código en la terminal que acepta varios proveedores (Anthropic, OpenAI, Google, modelos gratis). Versión 1 (la 2 aún tiene fallos), instalador oficial en `~/.opencode/bin` enlazado en `~/.local/bin`. Actualizar: `opencode upgrade` (se queda en la 1; para pasar a la 2: `opencode upgrade --major`) |
 | [herdr](https://github.com/herdrdev/herdr) | Multiplexor de terminal con estado de agentes (instalador oficial, `~/.local/bin`) |
 | [Zed](https://zed.dev) | Editor de código rápido (instalador oficial, en `~/.local/zed.app`) |
 | [Bruno](https://www.usebruno.com) | Cliente de APIs gráfico (.deb oficial; la versión de Nix falla por el sandbox) |
