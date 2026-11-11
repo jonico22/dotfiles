@@ -48,6 +48,15 @@ fi
 if command -v flatpak >/dev/null; then
   flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
   grep -vE '^\s*(#|$)' packages/flatpak.txt | xargs -r flatpak install -y --noninteractive flathub
+  # --- Elgato (opcional, solo si tienes Stream Deck o micrófono Wave). Ver docs/10-elgato.md ---
+  if pregunta "¿Tienes Stream Deck o micrófono Elgato Wave? (instala OpenDeck y Pipeweaver)"; then
+    flatpak install -y --noninteractive flathub me.amankhanna.opendeck || echo "Aviso: falló OpenDeck"
+    # Pipeweaver (mezclador tipo Wave Link): no está en Flathub; se instala desde el repo del autor.
+    # Requiere sudo: polkit no deja a un usuario normal añadir un remoto de sistema.
+    flatpak info io.github.pipeweaver >/dev/null 2>&1 \
+      || sudo flatpak install -y https://github.com/pipeweaver/pipeweaver/releases/latest/download/pipeweaver.flatpakref \
+      || echo "Aviso: falló Pipeweaver"
+  fi
 fi
 
 # --- Ulauncher (PPA; si falla en esta versión, usar el .deb de GitHub) ---

@@ -14,6 +14,7 @@ Cada una dice **qué hace** y trae los **ejemplos que más se usan**.
 | [7. Instalar programas](07-instalar-programas.md) | `nix`, `flatpak`, `apt` y los scripts del repo |
 | [8. Neovim y herdr](08-neovim.md) | `nvim` (LazyVim), `herdr`, atajos |
 | [9. IA local y conversión](09-ia-local-y-conversion.md) | Modelos de Ollama (código, OCR, imágenes), `ffmpeg`, `pandoc`, `qpdf`, `ocrmypdf` |
+| [10. Elgato (opcional)](10-elgato.md) | Stream Deck (OpenDeck), micrófono Wave, Pipeweaver. Solo si tienes estos periféricos |
 
 ## Resumen rápido
 

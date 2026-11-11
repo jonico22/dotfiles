@@ -4,6 +4,7 @@ direnv
 docling
 duf
 dust
+easyeffects
 exiftool
 gcc
 gh
@@ -32,6 +33,7 @@ podman
 posting
 python3
 qpdf
+qpwgraph
 tesseract
 tree-sitter
 unar

@@ -20,6 +20,7 @@ Mi configuración de terminal para desarrollo en Ubuntu.
 | `lazygit/config.yml` | `~/.config/lazygit/config.yml` | delta como pager |
 | `ulauncher/*.json` | `~/.config/ulauncher/` | Preferencias, atajos web y extensiones |
 | `direnv/direnvrc` | `~/.config/direnv/direnvrc` | Activa nix-direnv |
+| `wireplumber/51-elgato-wave.conf` | `~/.config/wireplumber/wireplumber.conf.d/` | **Opcional:** micrófono Elgato Wave estable. Ver [docs/10](docs/10-elgato.md) |
 | `gnome/*.ini` | dconf | Escritorios, atajos y extensiones de GNOME |
 | `packages/*.txt` | — | Listas apt, Nix, Flatpak y modelos Ollama |
 | `files.sh` | — | Lista única de archivos usada por `backup.sh` e `install.sh` |
@@ -208,6 +209,9 @@ gh repo clone dotfiles ~/dotfiles
 ```
 
 Luego cierra y abre Ghostty.
+
+> **Elgato (opcional):** `install.sh` pregunta si tienes Stream Deck o micrófono Wave. Si no tienes estos
+> periféricos, responde `N` y no se instala nada de eso. Detalles en [docs/10-elgato.md](docs/10-elgato.md).
 
 ## 🔄 Guardar cambios
 
