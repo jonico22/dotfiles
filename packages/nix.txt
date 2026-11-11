@@ -8,6 +8,7 @@ dust
 easyeffects
 exiftool
 gcc
+gemini-cli
 gh
 git
 glow

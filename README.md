@@ -59,6 +59,7 @@ Mi configuración de terminal para desarrollo en Ubuntu.
 |---|---|
 | gh, git, lazygit | GitHub CLI, git, interfaz git en terminal |
 | codex | Codex CLI de OpenAI (agente de código en la terminal; usa la sesión de la app de ChatGPT en `~/.codex`). Actualizar: `nix profile upgrade codex` |
+| gemini-cli | Gemini CLI de Google (`gemini`; agente de código en la terminal). La primera vez pide iniciar sesión con Google. Actualizar: `nix profile upgrade gemini-cli` |
 | nodejs, pnpm, python3 | Lenguajes y gestor de paquetes |
 | podman | Contenedores |
 | mpv, yt-dlp | Reproductor y descargador de video |
