@@ -44,6 +44,12 @@ if ! command -v agy >/dev/null; then
   sed -i '/^# Added by Antigravity CLI installer$/,+1d' ~/.bashrc ~/.profile 2>/dev/null || true
 fi
 
+# --- OpenCode 2 (instalador oficial en ~/.opencode/bin; se enlaza en ~/.local/bin para no tocar .bashrc) ---
+if ! command -v opencode >/dev/null; then
+  curl -fsSL https://opencode.ai/v2/install | bash -s -- --no-modify-path \
+    && ln -sfn ~/.opencode/bin/opencode ~/.local/bin/opencode || echo "Aviso: falló OpenCode"
+fi
+
 # --- herdr (multiplexor de terminal con agentes; binario oficial con checksum) ---
 command -v herdr >/dev/null || curl -fsSL https://herdr.dev/install.sh | sh
 
