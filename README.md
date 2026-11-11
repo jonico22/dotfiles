@@ -46,6 +46,7 @@ Mi configuración de terminal para desarrollo en Ubuntu.
 | ffmpeg, poppler-utils, ghostscript (apt) | Convertir audio/vídeo, extraer texto de PDFs y comprimirlos |
 | [delta](https://github.com/dandavison/delta) | Diffs de git con colores y lado a lado |
 | [direnv](https://direnv.net) | Carga el entorno de cada proyecto (`.envrc`) |
+| [Claude Code](https://claude.com/claude-code) | Agente de IA en la terminal (instalador nativo, `~/.local/bin`; sin sudo y se actualiza solo. No instalar con npm/pnpm: no se actualiza) |
 | [herdr](https://github.com/herdrdev/herdr) | Multiplexor de terminal con estado de agentes (instalador oficial, `~/.local/bin`) |
 | [Zed](https://zed.dev) | Editor de código rápido (instalador oficial, en `~/.local/zed.app`) |
 | [Bruno](https://www.usebruno.com) | Cliente de APIs gráfico (.deb oficial; la versión de Nix falla por el sandbox) |

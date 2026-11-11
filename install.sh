@@ -34,6 +34,9 @@ command -v mise >/dev/null || curl -fsS https://mise.run | sh
 # --- Zed (instalador oficial) ---
 command -v zed >/dev/null || curl -f https://zed.dev/install.sh | sh
 
+# --- Claude Code (instalador nativo: sin sudo y se actualiza solo; no usar npm/pnpm) ---
+command -v claude >/dev/null || curl -fsSL https://claude.ai/install.sh | bash
+
 # --- herdr (multiplexor de terminal con agentes; binario oficial con checksum) ---
 command -v herdr >/dev/null || curl -fsSL https://herdr.dev/install.sh | sh
 
