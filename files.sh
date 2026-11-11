@@ -27,6 +27,7 @@ FILES=(
   "$HOME/.config/nvim/lua/plugins/diffview.lua:nvim/lua/plugins/diffview.lua"
   "$HOME/.config/nvim/lazy-lock.json:nvim/lazy-lock.json"
   "$HOME/.config/herdr/config.toml:herdr/config.toml"
+  "$HOME/.claude/settings.json:claude/settings.json"
   "$HOME/.config/wireplumber/wireplumber.conf.d/51-elgato-wave.conf:wireplumber/51-elgato-wave.conf"
   "$HOME/.markdownlint-cli2.yaml:.markdownlint-cli2.yaml"
 )

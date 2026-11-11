@@ -16,6 +16,7 @@ Mi configuración de terminal para desarrollo en Ubuntu.
 | `.bash_aliases` | `~/.bash_aliases` | Alias cortos: `nixi`, `nixs`, `lg`, `agi`, `da`... |
 | `nvim/` | `~/.config/nvim/` | Neovim con LazyVim (LSP, buscador, git, diffview, Claude Code; Catppuccin) |
 | `herdr/config.toml` | `~/.config/herdr/config.toml` | herdr: paneles, sesiones y agentes (prefijo `Ctrl+a`) |
+| `claude/settings.json` | `~/.claude/settings.json` | Claude Code: modelo, tema, notificaciones y hook de herdr |
 | `glow/estilo.json` | `~/.config/glow/estilo.json` | Estilo de glow para Markdown (sin los `#` en los títulos) |
 | `lazygit/config.yml` | `~/.config/lazygit/config.yml` | delta como pager |
 | `ulauncher/*.json` | `~/.config/ulauncher/` | Preferencias, atajos web y extensiones |
