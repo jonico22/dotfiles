@@ -37,6 +37,13 @@ command -v zed >/dev/null || curl -f https://zed.dev/install.sh | sh
 # --- Claude Code (instalador nativo: sin sudo y se actualiza solo; no usar npm/pnpm) ---
 command -v claude >/dev/null || curl -fsSL https://claude.ai/install.sh | bash
 
+# --- Antigravity CLI (agy, de Google; binario oficial con SHA-512, sin sudo) ---
+# Su instalador añade ~/.local/bin al PATH en .bashrc y .profile aunque ya esté: se quita el duplicado.
+if ! command -v agy >/dev/null; then
+  curl -fsSL https://antigravity.google/cli/install.sh | bash || echo "Aviso: falló Antigravity CLI"
+  sed -i '/^# Added by Antigravity CLI installer$/,+1d' ~/.bashrc ~/.profile 2>/dev/null || true
+fi
+
 # --- herdr (multiplexor de terminal con agentes; binario oficial con checksum) ---
 command -v herdr >/dev/null || curl -fsSL https://herdr.dev/install.sh | sh
 
