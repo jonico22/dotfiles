@@ -5,12 +5,16 @@ instalar() {
     local dl; dl="$(xdg-user-dir DOWNLOAD 2>/dev/null || echo ~/Descargas)"
     f="$(ls -t "$dl"/*.deb "$dl"/*.AppImage "$dl"/*.appimage 2>/dev/null | head -1)"
     [ -z "$f" ] && { echo "No encontré .deb ni .AppImage en $dl"; return 1; }
-    read -rp "¿Instalar $(basename "$f")? [S/n] " r
-    [[ "$r" =~ ^[Nn]$ ]] && return 0
+    echo "Último descargado: $(basename "$f") ($(date -r "$f" '+%F %R'))"
   fi
   [ -f "$f" ] || { echo "No existe: $f"; return 1; }
   case "$f" in
     *.deb)
+      # Se muestra qué es antes de instalarlo como root; por defecto, No.
+      dpkg-deb -f "$f" Package Version Maintainer Homepage 2>/dev/null \
+        || { echo "No es un .deb válido: $f"; return 1; }
+      read -rp "¿Instalar con sudo? [s/N] " r
+      [[ "$r" =~ ^[sSyY]$ ]] || return 0
       sudo apt install -y "$(realpath "$f")" ;;
     *.AppImage|*.appimage)
       mkdir -p ~/Aplicaciones

@@ -4,6 +4,8 @@ set -e
 cd "$(dirname "$0")"
 source ./files.sh
 pregunta() { read -rp "$1 [s/N] " r; [[ "$r" =~ ^[sSyY]$ ]]; }
+# Carpeta temporal propia (no rutas fijas en /tmp); se borra al salir.
+tmp="$(mktemp -d)"; trap 'rm -rf "$tmp"' EXIT
 
 # --- apt ---
 sudo apt update
@@ -13,8 +15,8 @@ command -v tldr >/dev/null && tldr --update || true
 # --- Nerd Font ---
 if ! fc-list | grep -qi "JetBrainsMono Nerd"; then
   mkdir -p ~/.local/share/fonts
-  wget -qO /tmp/JetBrainsMono.zip https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip
-  unzip -oq /tmp/JetBrainsMono.zip -d ~/.local/share/fonts/JetBrainsMono
+  wget -qO "$tmp/JetBrainsMono.zip" https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip
+  unzip -oq "$tmp/JetBrainsMono.zip" -d ~/.local/share/fonts/JetBrainsMono
   fc-cache -f
 fi
 
@@ -23,9 +25,8 @@ command -v starship >/dev/null || curl -sS https://starship.rs/install.sh | sh -
 
 # --- ble.sh ---
 if [ ! -f ~/.local/share/blesh/ble.sh ]; then
-  rm -rf /tmp/ble.sh
-  git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyoga/ble.sh.git /tmp/ble.sh
-  make -C /tmp/ble.sh install PREFIX=~/.local
+  git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyoga/ble.sh.git "$tmp/ble.sh"
+  make -C "$tmp/ble.sh" install PREFIX=~/.local
 fi
 
 # --- mise ---
@@ -57,8 +58,8 @@ command -v herdr >/dev/null || curl -fsSL https://herdr.dev/install.sh | sh
 # --- Bruno (.deb oficial; la versión de Nix falla por el sandbox de Electron) ---
 if ! command -v bruno >/dev/null; then
   v=$(curl -fsSL https://api.github.com/repos/usebruno/bruno/releases/latest | grep -m1 '"tag_name"' | cut -d'"' -f4)
-  curl -fsSL -o /tmp/bruno.deb "https://github.com/usebruno/bruno/releases/download/$v/bruno_${v#v}_amd64_linux.deb" \
-    && sudo apt install -y /tmp/bruno.deb || echo "Aviso: instala Bruno desde https://www.usebruno.com/downloads"
+  curl -fsSL -o "$tmp/bruno.deb" "https://github.com/usebruno/bruno/releases/download/$v/bruno_${v#v}_amd64_linux.deb" \
+    && sudo apt install -y "$tmp/bruno.deb" || echo "Aviso: instala Bruno desde https://www.usebruno.com/downloads"
 fi
 
 # --- Flatpak + Flathub ---
@@ -69,9 +70,9 @@ if command -v flatpak >/dev/null; then
   if pregunta "¿Tienes Stream Deck o micrófono Elgato Wave? (instala OpenDeck y Pipeweaver)"; then
     flatpak install -y --noninteractive flathub me.amankhanna.opendeck || echo "Aviso: falló OpenDeck"
     # Pipeweaver (mezclador tipo Wave Link): no está en Flathub; se instala desde el repo del autor.
-    # Requiere sudo: polkit no deja a un usuario normal añadir un remoto de sistema.
+    # Se instala por usuario (--user): sin sudo y sin añadir un remoto de terceros al sistema.
     flatpak info io.github.pipeweaver >/dev/null 2>&1 \
-      || sudo flatpak install -y https://github.com/pipeweaver/pipeweaver/releases/latest/download/pipeweaver.flatpakref \
+      || flatpak install --user -y https://github.com/pipeweaver/pipeweaver/releases/latest/download/pipeweaver.flatpakref \
       || echo "Aviso: falló Pipeweaver"
   fi
 fi

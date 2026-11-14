@@ -31,5 +31,22 @@ command -v flatpak >/dev/null && flatpak list --app --columns=application > pack
 command -v ollama >/dev/null && ollama list | awk 'NR>1{print $1"  # "$3" "$4}' | sort > packages/ollama.txt
 # apt.txt se mantiene a mano
 
-git add .
+# Solo se añaden las rutas conocidas (no "git add ." para no subir archivos sueltos).
+rutas=()
+for d in gnome packages "${FILES[@]#*:}"; do
+  # git add falla entero si una ruta no existe ni está versionada
+  { [ -e "$d" ] || git ls-files --error-unmatch -- "$d" >/dev/null 2>&1; } && rutas+=("$d")
+done
+git add -A -- "${rutas[@]}"
+git diff --cached --quiet && { echo "Sin cambios."; exit 0; }
+git diff --cached --stat
+
+# Busca posibles secretos en lo que se va a subir.
+if git diff --cached -U0 | grep -E '^\+' \
+   | grep -nEi '(sk-[A-Za-z0-9_-]{16,}|ghp_[A-Za-z0-9]{20,}|github_pat_|AKIA[0-9A-Z]{16}|xox[abp]-|-----BEGIN [A-Z ]*PRIVATE KEY|(api[_-]?key|secret|token|password)["'\'' ]*[:=])'; then
+  echo "¡Ojo! Lo de arriba parece un secreto. Revísalo antes de subir."
+fi
+
+read -rp "¿Hacer commit y push? [s/N] " r
+[[ "$r" =~ ^[sSyY]$ ]] || { echo "Cancelado (los cambios quedan en el índice)."; exit 0; }
 git commit -m "Actualización $(date +%F)" && git push
