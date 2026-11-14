@@ -1,0 +1,20 @@
+# Herramientas de terminal (Ghostty + nixGL se instalan aparte en install.sh)
+fzf
+zoxide
+eza
+bat
+ripgrep
+fd
+btop
+tealdeer
+glow
+jq
+yq-go
+dust
+duf
+hyperfine
+direnv
+nix-direnv
+herdr
+wl-clipboard
+translate-shell

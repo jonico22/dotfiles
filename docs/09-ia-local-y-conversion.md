@@ -50,8 +50,8 @@ Quitar fondos de imágenes no se instaló a propósito: el móvil, Canva o GIMP 
 
 | Origen | Programas |
 |---|---|
-| Nix (`packages/nix.txt`) | `imagemagick`, `yt-dlp`, `docling`, `pandoc`, `qpdf`, `exiftool`, `_7zz` (comando `7zz`), `unar`, `ocrmypdf`, `tesseract` |
-| apt (`packages/apt.txt`) | `ffmpeg`, `poppler-utils`, `ghostscript` |
+| Nix, grupo documentos (`packages/nix/documentos.txt`) | `imagemagick`, `docling`, `pandoc`, `qpdf`, `exiftool`, `_7zz` (comando `7zz`), `unar`, `ocrmypdf`, `tesseract`, `ffmpeg`, `poppler-utils`, `ghostscript` |
+| Nix, grupo multimedia | `yt-dlp` |
 | Nix (`packages/markitdown.nix`) | `markitdown` con soporte de PDF y Office |
 | Ya viene con Ubuntu | LibreOffice (`soffice`) |
 | Ollama (`packages/ollama.txt`) | los modelos de arriba |

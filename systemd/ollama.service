@@ -1,0 +1,10 @@
+# Ollama como servicio de tu usuario (sin root). Lo instala el grupo "ia" de install.sh.
+[Unit]
+Description=Ollama (usuario)
+
+[Service]
+ExecStart=%h/.nix-profile/bin/ollama serve
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

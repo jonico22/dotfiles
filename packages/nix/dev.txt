@@ -1,0 +1,24 @@
+# Desarrollo: git, editores, lenguajes, APIs y contenedores
+git
+gh
+lazygit
+delta
+neovim
+gcc
+tree-sitter
+nil
+nixfmt
+nodejs
+pnpm
+python3
+mise
+just
+xh
+hurl
+posting
+lazydocker
+podman
+meld
+dbeaver-bin
+lapce
+zed-editor

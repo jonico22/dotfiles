@@ -1,0 +1,13 @@
+# Convertir y procesar PDF, Office, imágenes y vídeo (markitdown se instala aparte con markitdown.nix)
+pandoc
+imagemagick
+ghostscript
+poppler-utils
+qpdf
+ocrmypdf
+tesseract
+exiftool
+_7zz
+unar
+ffmpeg
+docling

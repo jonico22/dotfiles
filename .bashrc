@@ -1,4 +1,7 @@
-[[ $- == *i* ]] && source ~/.local/share/blesh/ble.sh --noattach
+# ble.sh (autosugerencias): de Nix o de ~/.local
+for _b in ~/.nix-profile/share/blesh/ble.sh ~/.local/share/blesh/ble.sh; do
+  [[ $- == *i* && -f $_b ]] && { source "$_b" --noattach; break; }
+done; unset _b
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
@@ -116,9 +119,10 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+[ -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ] && . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 export NIX_CONFIG='experimental-features = nix-command flakes'
-alias ghostty='nixGL ghostty'
+# Ghostty de Nix necesita nixGL (OpenGL); la de apt no
+[ -x ~/.nix-profile/bin/ghostty ] && command -v nixGL >/dev/null && alias ghostty='nixGL ghostty'
 alias ver='celluloid'
 export PATH="$HOME/.local/bin:$PATH"
 export EDITOR=nvim VISUAL=nvim
@@ -126,11 +130,12 @@ export PNPM_HOME="$HOME/.local/share/pnpm"
 export PATH="$PNPM_HOME/bin:$PNPM_HOME:$PATH"
 
 # --- Herramientas dev ---
-eval "$(starship init bash)"
-eval "$(zoxide init bash)"
+command -v starship >/dev/null && eval "$(starship init bash)"
+command -v zoxide >/dev/null && eval "$(zoxide init bash)"
 
 # fzf (atajos Ctrl+R / Ctrl+T / Alt+C)
-[ -f /usr/share/doc/fzf/examples/key-bindings.bash ] && source /usr/share/doc/fzf/examples/key-bindings.bash
+if fzf --bash >/dev/null 2>&1; then eval "$(fzf --bash)"
+elif [ -f /usr/share/doc/fzf/examples/key-bindings.bash ]; then source /usr/share/doc/fzf/examples/key-bindings.bash; fi
 
 # Historial más útil
 HISTSIZE=10000
@@ -139,11 +144,15 @@ HISTCONTROL=ignoreboth:erasedups
 shopt -s histappend
 
 # Alias
-alias ls='eza --icons --group-directories-first'
-alias ll='eza -la --icons --git --group-directories-first'
-alias tree='eza --tree --icons'
-alias cat='batcat --paging=never'
-alias fd='fdfind'
+# Alias que funcionan con Nix (bat, fd) o con apt (batcat, fdfind)
+if command -v eza >/dev/null; then
+  alias ls='eza --icons --group-directories-first'
+  alias ll='eza -la --icons --git --group-directories-first'
+  alias tree='eza --tree --icons'
+fi
+if command -v batcat >/dev/null; then export BAT=batcat; else export BAT=bat; fi
+command -v "$BAT" >/dev/null && alias cat="$BAT --paging=never"
+if command -v fdfind >/dev/null; then export FD=fdfind; alias fd='fdfind'; else export FD=fd; fi
 alias gs='git status'
 alias gl='git log --oneline --graph --decorate -20'
 

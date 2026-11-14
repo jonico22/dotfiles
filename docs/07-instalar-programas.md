@@ -3,9 +3,9 @@
 ## Dónde instalar cada cosa
 | Tipo | Cómo |
 |---|---|
-| Herramientas de terminal y apps | **Nix**: `nix profile add nixpkgs#nombre` |
-| Apps con interfaz | **Flatpak** o `.deb` con `instalar` |
-| Base del sistema | `sudo apt install nombre` |
+| Herramientas de terminal y apps | **Nix**: `nix profile add nixpkgs#nombre` (en tu usuario, sin sudo) |
+| Apps con interfaz | **Flatpak** con `--user`, o `.deb` con `instalar` (pide sudo) |
+| Base del sistema | `sudo apt install nombre` (solo si tienes root) |
 
 ## Nix
 ```bash
@@ -17,7 +17,7 @@ nix profile remove nombre          # quitar                 (atajo: nixr nombre)
 
 ## Flatpak
 ```bash
-flatpak install flathub app.drey.Dialect
+flatpak install --user flathub app.drey.Dialect
 flatpak list --app
 flatpak uninstall app.drey.Dialect
 ```
@@ -25,7 +25,8 @@ flatpak uninstall app.drey.Dialect
 ## Respaldar y restaurar este repo
 ```bash
 ~/dotfiles/backup.sh    # copia tu config al repo, hace commit y push
-~/dotfiles/install.sh   # en una PC nueva: instala todo y copia la config
+~/dotfiles/install.sh   # en una PC nueva: elige grupos y copia la config
+~/dotfiles/install.sh terminal dev   # solo esos grupos
 ```
 Para guardar un archivo nuevo en el respaldo, agrégalo en `files.sh`.
-Después de instalar con Nix, anota el paquete en `packages/nix.txt` (o ejecuta `backup.sh`, que lo regenera).
+Después de instalar con Nix, anota el paquete en su grupo: `packages/nix/<grupo>.txt` (`backup.sh` avisa si falta alguno).

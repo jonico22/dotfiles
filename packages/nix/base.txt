@@ -1,0 +1,3 @@
+# Siempre se instala: prompt y autosugerencias de Bash
+starship
+blesh

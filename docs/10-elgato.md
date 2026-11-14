@@ -1,7 +1,7 @@
 # 10. Elgato: Stream Deck y micrófono Wave (opcional)
 
 > **Opcional.** Esta guía solo sirve si tienes un **Stream Deck** o un micrófono **Elgato Wave**.
-> Si no tienes estos periféricos, sáltala: `install.sh` pregunta antes de instalar algo de aquí
+> Si no tienes estos periféricos, sáltala: `install.sh` (grupo `escritorio`) pregunta antes de instalar algo de aquí
 > (responde `N`), y el archivo de WirePlumber no hace nada sin un Wave conectado.
 
 ## Qué se instala
@@ -9,11 +9,11 @@
 | Programa | Fuente | Para qué |
 |---|---|---|
 | [OpenDeck](https://github.com/nekename/OpenDeck) | Flatpak (Flathub) | Configurar los botones y diales del Stream Deck sin `sudo` |
-| [Pipeweaver](https://github.com/pipeweaver/pipeweaver) | Flatpak (repo del autor, con `sudo`) | Mezclador tipo Wave Link: canales separados para sistema, navegador y micrófono |
+| [Pipeweaver](https://github.com/pipeweaver/pipeweaver) | Flatpak `--user` (repo del autor, sin `sudo`) | Mezclador tipo Wave Link: canales separados para sistema, navegador y micrófono |
 | EasyEffects | Nix | Filtros para el micrófono (ruido, compresor, ecualizador) |
 | qpwgraph | Nix | Ver y conectar el audio de PipeWire de forma visual |
 
-EasyEffects y qpwgraph están en `packages/nix.txt` porque sirven con cualquier micrófono.
+EasyEffects y qpwgraph están en el grupo multimedia (`packages/nix/multimedia.txt`) porque sirven con cualquier micrófono.
 
 ## Configuración
 

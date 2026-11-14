@@ -1,0 +1,3 @@
+# IA en la terminal (Claude Code, agy y OpenCode 1 usan su instalador oficial: install.sh pregunta)
+codex
+ollama

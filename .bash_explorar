@@ -9,14 +9,14 @@ arbol() { eza --tree --icons --git-ignore -L "${2:-2}" "${1:-.}"; }
 #  - Enter abre el archivo completo (md con formato, código con colores); q vuelve a la lista
 explorar() {
   ( cd "${1:-.}" || exit 1
-    fdfind --hidden --exclude .git | fzf --height=100% \
+    "${FD:-fd}" --hidden --exclude .git | fzf --height=100% \
       --preview 'if [ -d {} ]; then eza --tree --level=2 --icons --color=always {};
                  elif [[ {} == *.md ]]; then glow -s ~/.config/glow/estilo.json -w "${FZF_PREVIEW_COLUMNS:-80}" {};
-                 else batcat --color=always --style=numbers {}; fi' \
+                 else ${BAT:-bat} --color=always --style=numbers {}; fi' \
       --preview-window=right:65% \
       --bind 'enter:execute(if [ -d {} ]; then eza --tree --icons --color=always {} | less -R;
                             elif [[ {} == *.md ]]; then glow -p -s ~/.config/glow/estilo.json {};
-                            else batcat --color=always --style=numbers --paging=always {}; fi)' )
+                            else ${BAT:-bat} --color=always --style=numbers --paging=always {}; fi)' )
 }
 
 # Leer un Markdown con formato: md archivo.md  (q para salir)

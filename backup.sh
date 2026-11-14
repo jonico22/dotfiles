@@ -25,8 +25,16 @@ fi
 
 # Listas de paquetes
 mkdir -p packages
-command -v nix >/dev/null && nix profile list --json 2>/dev/null \
-  | python3 -c "import json,sys; e=json.load(sys.stdin)['elements']; print('\n'.join(sorted(k for k,v in e.items() if v.get('attrPath')) if isinstance(e,dict) else sorted(x['attrPath'].split('.')[-1] for x in e if x.get('attrPath'))))" > packages/nix.txt
+# Nix: las listas van por grupos (packages/nix/*.txt) y se mantienen a mano.
+# Aquí solo se avisa de lo instalado que no está en ningún grupo.
+if command -v nix >/dev/null; then
+  sinlista=$(comm -23 \
+    <(nix profile list 2>/dev/null | sed 's/\x1b\[[0-9;]*m//g' \
+        | sed -nE 's/.*legacyPackages\.[^.]+\.([^ ]+)$/\1/p' | sort -u) \
+    <(cat packages/nix/*.txt | grep -vE '^\s*(#|$)' | sort -u))
+  [ -n "$sinlista" ] && echo "Aviso: paquetes Nix instalados que no están en ningún grupo de packages/nix/ (añádelos al que toque):" \
+    && echo "$sinlista" | sed 's/^/  /'
+fi
 command -v flatpak >/dev/null && flatpak list --app --columns=application > packages/flatpak.txt
 command -v ollama >/dev/null && ollama list | awk 'NR>1{print $1"  # "$3" "$4}' | sort > packages/ollama.txt
 # apt.txt se mantiene a mano

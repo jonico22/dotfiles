@@ -16,84 +16,43 @@ Mi configuración de terminal para desarrollo en Ubuntu.
 | `.bash_aliases` | `~/.bash_aliases` | Alias cortos: `nixi`, `nixs`, `lg`, `agi`, `da`... |
 | `nvim/` | `~/.config/nvim/` | Neovim con LazyVim (LSP, buscador, git, diffview, Claude Code; Catppuccin) |
 | `herdr/config.toml` | `~/.config/herdr/config.toml` | herdr: paneles, sesiones y agentes (prefijo `Ctrl+a`) |
-| `claude/settings.json` | `~/.claude/settings.json` | Claude Code: modelo, tema, notificaciones y hook de herdr |
 | `glow/estilo.json` | `~/.config/glow/estilo.json` | Estilo de glow para Markdown (sin los `#` en los títulos) |
 | `lazygit/config.yml` | `~/.config/lazygit/config.yml` | delta como pager |
 | `ulauncher/*.json` | `~/.config/ulauncher/` | Preferencias, atajos web y extensiones |
 | `direnv/direnvrc` | `~/.config/direnv/direnvrc` | Activa nix-direnv |
 | `wireplumber/51-elgato-wave.conf` | `~/.config/wireplumber/wireplumber.conf.d/` | **Opcional:** micrófono Elgato Wave estable. Ver [docs/10](docs/10-elgato.md) |
 | `gnome/*.ini` | dconf | Escritorios, atajos y extensiones de GNOME |
-| `packages/*.txt` | — | Listas apt, Nix, Flatpak y modelos Ollama |
+| `packages/nix/*.txt` | — | Paquetes Nix por grupo (terminal, dev, ia…) |
+| `packages/*.txt` | — | apt (solo con root), Flatpak y modelos de Ollama |
+| `systemd/ollama.service` | `~/.config/systemd/user/` | Ollama como servicio de tu usuario (grupo ia) |
 | `files.sh` | — | Lista única de archivos usada por `backup.sh` e `install.sh` |
 
-## 🛠️ Programas instalados
+## 🛠️ Programas, por grupos
 
-| Programa | Para qué sirve |
+`install.sh` instala por **grupos**: tú eliges cuáles. Casi todo viene de **Nix** y se instala
+en tu usuario (`~/.nix-profile`), sin sudo. Cada lista está en `packages/nix/<grupo>.txt`.
+
+| Grupo | Qué trae |
 |---|---|
-| [Ghostty](https://ghostty.org) | Terminal rápida con GPU |
-| [JetBrainsMono Nerd Font](https://www.nerdfonts.com) | Fuente con íconos para el prompt |
-| [Starship](https://starship.rs) | Prompt con rama de git, versión de Node, hora, etc. |
-| [ble.sh](https://github.com/akinomyoga/ble.sh) | Autosugerencias y resaltado de sintaxis en Bash |
-| [fzf](https://github.com/junegunn/fzf) | Búsqueda difusa en historial y archivos |
-| [zoxide](https://github.com/ajeetdsouza/zoxide) | `cd` inteligente que recuerda tus carpetas |
-| [eza](https://github.com/eza-community/eza) | `ls` con colores, íconos y estado de git |
-| [bat](https://github.com/sharkdp/bat) | `cat` con resaltado de sintaxis |
-| [ripgrep](https://github.com/BurntSushi/ripgrep) | Búsqueda rápida de texto (`rg`) |
-| [fd](https://github.com/sharkdp/fd) | Búsqueda rápida de archivos |
+| **base** (siempre) | Copia las configs · [Starship](https://starship.rs) (prompt) · [ble.sh](https://github.com/akinomyoga/ble.sh) (autosugerencias) · [JetBrainsMono Nerd Font](https://www.nerdfonts.com) |
+| **terminal** | [Ghostty](https://ghostty.org) · fzf · zoxide · eza · bat · ripgrep · fd · btop · tldr · glow · jq / yq · dust / duf · hyperfine · direnv + nix-direnv · [herdr](https://github.com/herdrdev/herdr) · wl-clipboard · translate-shell |
+| **dev** | git · gh · lazygit · delta · neovim (+ gcc, tree-sitter, nil, nixfmt) · nodejs · pnpm · python3 · mise · just · xh · hurl · posting · lazydocker · podman · meld · dbeaver · lapce · [Zed](https://zed.dev) · [Bruno](https://www.usebruno.com) (Flatpak) |
+| **ia** | codex · [Ollama](https://ollama.com) como servicio de tu usuario + modelos (pregunta uno por uno, ~22 GB en total) · y, si dices que sí, Claude Code, agy y OpenCode 1 con su instalador oficial |
+| **documentos** | pandoc · imagemagick · ghostscript · poppler · qpdf · ocrmypdf + tesseract · exiftool · 7zz / unar · ffmpeg · docling · markitdown |
+| **multimedia** | mpv · yt-dlp · easyeffects · qpwgraph |
+| **escritorio** | Ajustes de GNOME (dconf) · [Ulauncher](https://ulauncher.io) · CopyQ · Flatpak de `packages/flatpak.txt` (Dialect) · Elgato opcional ([docs/10](docs/10-elgato.md)) |
 
-| [Ulauncher](https://ulauncher.io) | Lanzador de apps (Shift+Espacio) |
-| [Ollama](https://ollama.com) | Modelos locales: traducir (translategemma), autocompletar (qwen2.5-coder), OCR (glm-ocr) e imágenes (gemma4:e4b). Ver [docs/09](docs/09-ia-local-y-conversion.md) |
-| gawk, bash-completion, translate-shell, wl-clipboard, unzip, wget, gnome-shell-extension-manager (apt) | Soporte: ble.sh, autocompletado, `traducir` (portapapeles), descargas y extensiones de GNOME |
-| ffmpeg, poppler-utils, ghostscript (apt) | Convertir audio/vídeo, extraer texto de PDFs y comprimirlos |
-| [delta](https://github.com/dandavison/delta) | Diffs de git con colores y lado a lado |
-| [direnv](https://direnv.net) | Carga el entorno de cada proyecto (`.envrc`) |
-| [Claude Code](https://claude.com/claude-code) | Agente de IA en la terminal (instalador nativo, `~/.local/bin`; sin sudo y se actualiza solo. No instalar con npm/pnpm: no se actualiza) |
-| [Antigravity CLI](https://antigravity.google) | Agente de IA de Google en la terminal (`agy`; instalador oficial en `~/.local/bin`, sin sudo). La primera vez pide iniciar sesión con Google |
-| [OpenCode](https://opencode.ai) | Agente de código en la terminal que acepta varios proveedores (Anthropic, OpenAI, Google, modelos gratis). Versión 1 (la 2 aún tiene fallos), instalador oficial en `~/.opencode/bin` enlazado en `~/.local/bin`. Actualizar: `opencode upgrade` (se queda en la 1; para pasar a la 2: `opencode upgrade --major`) |
-| [herdr](https://github.com/herdrdev/herdr) | Multiplexor de terminal con estado de agentes (instalador oficial, `~/.local/bin`) |
-| [Zed](https://zed.dev) | Editor de código rápido (instalador oficial, en `~/.local/zed.app`) |
-| [Bruno](https://www.usebruno.com) | Cliente de APIs gráfico (.deb oficial; la versión de Nix falla por el sandbox) |
-| CopyQ, btop, tealdeer (`tldr`), Dialect (Flatpak) | Portapapeles, monitor, ayuda rápida, traductor gráfico |
+Notas sobre algunos paquetes:
 
-### Paquetes Nix (`packages/nix.txt`)
-
-| Paquete | Para qué |
+| Paquete | Nota |
 |---|---|
-| gh, git, lazygit | GitHub CLI, git, interfaz git en terminal |
-| codex | Codex CLI de OpenAI (agente de código en la terminal; usa la sesión de la app de ChatGPT en `~/.codex`). Actualizar: `nix profile upgrade codex` |
-| nodejs, pnpm, python3 | Lenguajes y gestor de paquetes |
-| podman | Contenedores |
-| mpv, yt-dlp | Reproductor y descargador de video |
-| neovim, gcc, tree-sitter, nil, nixfmt | Neovim (LazyVim) y lo que necesita: compilador, parsers, LSP y formato de Nix |
-| lapce | Editor de código |
-| imagemagick | Convertir y redimensionar imágenes (`magick`) |
-| pandoc | Convertir entre Markdown, Word, HTML y PDF |
-| docling | Convierte PDFs con tablas, columnas y fórmulas a Markdown (usa modelos de visión; ~1,4 GB de RAM, ~8 s por página con CPU). Requiere `NIXPKGS_ALLOW_UNFREE=1` y `--impure` (depende de un paquete no libre); `install.sh` ya lo hace |
-| markitdown | Convierte PDF, Word, Excel y PowerPoint a Markdown. Se instala con `packages/markitdown.nix` (el de nixpkgs viene sin soporte de PDF/Office) |
-| qpdf | Unir, dividir y proteger PDFs |
-| ocrmypdf + tesseract | OCR sin IA: vuelve buscable un PDF escaneado (incluye español) |
-| exiftool | Ver y borrar metadatos de fotos y archivos |
-| _7zz, unar | Abrir ZIP, 7z, RAR y otros comprimidos (comando `7zz`) |
-| nixGL | Ejecutar apps gráficas de Nix (se instala aparte: `github:nix-community/nixGL`) |
-
-Herramientas CLI y apps instaladas con Nix (ver `packages/nix.txt`):
-
-| Paquete | Para qué |
-|---|---|
-| direnv + nix-direnv | Al entrar a una carpeta de proyecto carga solo sus variables `.env` y su entorno de Nix, y al salir los descarga. Con Nix es lo más útil de todo |
-| jq / yq-go | Leer y filtrar JSON y YAML (`cat package.json \| jq .scripts`) |
-| xh | Probar APIs desde la terminal, más simple que curl (`xh POST :3000/api name=jose`) |
-| posting | Cliente de APIs en la terminal, tipo Postman (`posting`) |
-| hurl | Guardar endpoints en archivos `.hurl` y ejecutarlos (`hurl archivo.hurl`) |
-| just | Guardar los comandos del proyecto en un `justfile` (`just dev`, `just test`) |
-| glow | Leer Markdown con formato en la terminal (`glow CLAUDE.md`) |
-| lazydocker | Lo mismo que lazygit, pero para contenedores Docker |
-| hyperfine | Medir y comparar la velocidad de comandos |
-| dust, duf | Ver qué ocupa espacio en disco, de forma visual |
-| dbeaver-bin | Cliente gráfico de bases de datos |
-| meld | Comparar archivos y carpetas |
-
-Si alguna app gráfica de Nix abre con errores de OpenGL, ejecútala con `nixGL <app>`.
+| Ghostty | Con root y si Ubuntu lo trae, se instala con apt (no necesita nada más). Si no, con Nix + [nixGL](https://github.com/nix-community/nixGL) |
+| nixGL | Las apps gráficas de Nix (Ghostty, Zed, lapce, meld, dbeaver, mpv…) lo necesitan fuera de NixOS. Si una abre con errores de OpenGL: `nixGL <app>` |
+| direnv + nix-direnv | Al entrar a una carpeta de proyecto carga solo sus variables `.env` y su entorno de Nix, y al salir los descarga |
+| docling | PDFs con tablas, columnas y fórmulas a Markdown (~1,4 GB de RAM, ~8 s por página con CPU). Depende de un paquete no libre: `install.sh` lo permite **solo** en el grupo documentos |
+| markitdown | PDF, Word, Excel y PowerPoint a Markdown. Se instala con `packages/markitdown.nix` (el de nixpkgs viene sin soporte de PDF/Office) |
+| Ollama | El de Nix usa CPU. Si ya tienes Ollama instalado de otra forma (por ejemplo con GPU), no se toca |
+| codex | Codex CLI de OpenAI; usa la sesión de la app de ChatGPT en `~/.codex`. Actualizar: `nix profile upgrade codex` |
 
 ## 🤖 Agentes de IA en la terminal
 
@@ -104,7 +63,7 @@ Si alguna app gráfica de Nix abre con errores de OpenGL, ejecútala con `nixGL 
 | `agy` | Google (Antigravity CLI) | Instalador oficial (`~/.local/bin`) | Solo |
 | `opencode` | Varios proveedores (OpenCode 1) | Instalador oficial (`~/.opencode/bin`) | `opencode upgrade` |
 
-- Ninguno usa sudo, y `install.sh` instala los cuatro.
+- Ninguno usa sudo. `codex` se instala con Nix en el grupo **ia**; para los otros tres `install.sh` pregunta, porque usan el instalador oficial (descarga y ejecuta un script).
 - **Gemini CLI no se instala:** desde el 18-06-2026 la cuenta gratuita y los planes Google AI Pro/Ultra solo funcionan en `agy`.
 - **Primera vez:** `codex` usa la sesión de la app de ChatGPT; `agy` pide iniciar sesión con Google; `opencode` trae modelos gratis y con `opencode auth login` se agregan otros proveedores.
 
@@ -219,17 +178,63 @@ Para que `git push` use tu cuenta de GitHub: `gh auth login`.
 
 ## 🚀 Instalación en una PC nueva
 
-> Requisito: tener Ghostty instalado.
+Pensado para Ubuntu (funciona en otras distros con Nix). **No ejecutes `install.sh` con `sudo`**:
+se instala en tu usuario y pide sudo solo cuando hace falta.
+
+### 1. Clonar
 
 ```bash
-gh repo clone dotfiles ~/dotfiles
-~/dotfiles/install.sh
+git clone https://github.com/<tu-usuario>/dotfiles.git ~/dotfiles
 ```
 
-Luego cierra y abre Ghostty.
+(Si el repo es privado: `gh auth login` y luego `gh repo clone <tu-usuario>/dotfiles ~/dotfiles`.)
 
-> **Elgato (opcional):** `install.sh` pregunta si tienes Stream Deck o micrófono Wave. Si no tienes estos
-> periféricos, responde `N` y no se instala nada de eso. Detalles en [docs/10-elgato.md](docs/10-elgato.md).
+### 2. Elegir qué instalar
+
+```bash
+~/dotfiles/install.sh                 # pregunta grupo por grupo
+```
+
+```bash
+~/dotfiles/install.sh terminal dev    # solo esos grupos (base siempre va)
+```
+
+```bash
+~/dotfiles/install.sh todo            # todos los grupos
+```
+
+Grupos: `terminal`, `dev`, `ia`, `documentos`, `multimedia` y `escritorio` (ver la tabla de arriba).
+Se puede volver a ejecutar cuando quieras: lo que ya está instalado se salta.
+
+### 3. Con root o sin root
+
+`install.sh` lo detecta solo (si tu usuario está en el grupo `sudo`), o lo eliges con `--con-root` / `--sin-root`.
+
+| | Con root | Sin root |
+|---|---|---|
+| Nix | Si falta, pregunta e instala el oficial de [nixos.org](https://nixos.org/download) (sudo una vez, para crear `/nix`) | Se usa si ya está instalado. Si no, solo se copian las configs y te avisa |
+| apt | Lo mínimo: `curl`, `git`, `wget`, `unzip`, `bash-completion`, `flatpak`, `libfuse2t64` (`packages/apt.txt`) | Nada |
+| Programas | Nix, en tu usuario | Igual |
+| Apps gráficas | Flatpak con `--user` | Igual, si `flatpak` ya está instalado |
+
+Lo que **nunca** hace: añadir PPAs o repos apt de terceros, instalar `.deb` con sudo ni añadir remotos
+Flatpak al sistema. Los únicos `curl | sh` son Claude Code, agy y OpenCode 1, y solo si dices que sí.
+
+Al terminar muestra un resumen con los avisos (lo que faltó o falló). Luego abre una terminal nueva;
+si las apps de Nix o Flatpak no salen en el menú, cierra sesión y vuelve a entrar.
+
+> **Sin root y sin Nix** quedan las configs y Bash con colores, pero sin starship, ble.sh ni las
+> herramientas. Pide a un admin que instale Nix una vez y vuelve a ejecutar `install.sh`.
+
+> **Elgato (opcional):** en el grupo `escritorio` pregunta si tienes Stream Deck o micrófono Wave. Si no,
+> responde `N`. Detalles en [docs/10-elgato.md](docs/10-elgato.md).
+
+### Agregar un programa
+
+1. Instálalo: `nix profile add nixpkgs#nombre` (atajo `nixi nombre`).
+2. Anótalo en el grupo que toque: `packages/nix/<grupo>.txt`.
+
+`backup.sh` te avisa si hay paquetes Nix instalados que no están en ningún grupo.
 
 ## 🔄 Guardar cambios
 
@@ -256,6 +261,6 @@ Tactile y Auto Move Windows se instalan desde el Gestor de extensiones (no está
 - **venv con el Python de Nix:** las librerías compiladas (numpy, onnxruntime...) fallan con
   `libstdc++.so.6: cannot open shared object file`. Se arregla con
   `export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu` al ejecutar.
-- **`install.sh` y Ollama:** pregunta modelo por modelo (en total pesan ~22 GB); la lista con tamaños está en `packages/ollama.txt`.
-- **markitdown:** no instalarlo con `nix profile add nixpkgs#markitdown` (falla con PDF y Word). Usa `nix profile add --impure --file packages/markitdown.nix`; `install.sh` ya lo hace. Con tablas en PDF sale peor que `pdftotext -layout`.
+- **Ollama:** el grupo `ia` pregunta modelo por modelo (en total pesan ~22 GB); la lista con tamaños está en `packages/ollama.txt`.
+- **markitdown:** no instalarlo con `nix profile add nixpkgs#markitdown` (falla con PDF y Word). Usa `nix profile add --impure -I nixpkgs=flake:nixpkgs --file packages/markitdown.nix`; `install.sh` ya lo hace. Con tablas en PDF sale peor que `pdftotext -layout`.
 - **docling:** la primera vez descarga ~0,5 GB de modelos a `~/.cache/huggingface`. En mi prueba (un PDF sencillo generado con LibreOffice) no detectó las tablas; úsalo solo con PDFs complejos y compáralo con `pdftotext -layout`.

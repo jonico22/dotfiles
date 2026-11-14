@@ -2,7 +2,7 @@
 
 ## Neovim (LazyVim)
 Editor en la terminal con LSP, buscador, explorador y git ya configurados. Se abre con `v` (alias de `nvim`).
-La primera vez descarga los plugins solo; los servidores de lenguajes (TypeScript, Python, Bash, YAML, Docker, Markdown) los instala **Mason**. Nix (`nil`, `nixfmt`) viene de `packages/nix.txt`.
+La primera vez descarga los plugins solo; los servidores de lenguajes (TypeScript, Python, Bash, YAML, Docker, Markdown) los instala **Mason**. Nix (`nil`, `nixfmt`) viene del grupo dev (`packages/nix/dev.txt`).
 
 | Atajo | Acción |
 |---|---|
@@ -63,7 +63,7 @@ En la lista de archivos: `Enter` abre el diff, `-` hace stage/unstage y `Tab` pa
 | Imágenes (png, jpg, gif, pdf) | Abre el archivo con `v foto.png`: se dibuja en la terminal (Ghostty). Las del Markdown `![](img.png)` también |
 | Ver imágenes y archivos al buscar | `Espacio Espacio` y navega: el panel derecho es la vista previa |
 
-Las imágenes necesitan `imagemagick` y `gs` (en `packages/nix.txt`). Dentro de herdr pueden no dibujarse; si pasa, ábrelas en una ventana de Ghostty fuera de herdr.
+Las imágenes necesitan `imagemagick` y `gs` (grupo documentos: `packages/nix/documentos.txt`). Dentro de herdr pueden no dibujarse; si pasa, ábrelas en una ventana de Ghostty fuera de herdr.
 
 ### Plugins instalados
 Los trae LazyVim (base) más los extras de `nvim/lazyvim.json` y los de `nvim/lua/plugins/`.
