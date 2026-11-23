@@ -193,6 +193,9 @@ done
 if quiere dev && command -v nvim >/dev/null; then
   echo "[dev] Neovim: instalando plugins (lazy-lock.json)"
   nvim --headless "+Lazy! restore" +qa </dev/null || aviso "falló la instalación de plugins de Neovim (se instalarán al abrir nvim)"
+  # Segunda pasada: Mason instala LSP/formateadores y espera a que terminen
+  echo "[dev] Neovim: instalando herramientas de Mason"
+  nvim --headless -c "luafile mac/nvim-mason.lua" </dev/null || aviso "falló la instalación de herramientas de Mason (se instalarán al abrir nvim)"
 fi
 
 echo
