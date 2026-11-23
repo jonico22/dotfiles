@@ -15,6 +15,7 @@ Cada una dice **qué hace** y trae los **ejemplos que más se usan**.
 | [8. Neovim y herdr](08-neovim.md) | `nvim` (LazyVim), `herdr`, atajos |
 | [9. IA local y conversión](09-ia-local-y-conversion.md) | Modelos de Ollama (código, OCR, imágenes), `ffmpeg`, `pandoc`, `qpdf`, `ocrmypdf` |
 | [10. Elgato (opcional)](10-elgato.md) | Stream Deck (OpenDeck), micrófono Wave, Pipeweaver. Solo si tienes estos periféricos |
+| [Pendientes](pendientes.md) | Lista de tareas pendientes de la revisión del repo |
 
 ## Resumen rápido
 

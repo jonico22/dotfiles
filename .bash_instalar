@@ -40,16 +40,18 @@ _instalar_mac() {
   case "$f" in
     *.pkg)
       # Se muestra qué contiene antes de instalarlo como root; por defecto, No.
-      pkgutil --payload-files "$f" 2>/dev/null | head -20 \
+      local out
+      out="$(pkgutil --payload-files "$f" 2>/dev/null)" \
         || { echo "No es un .pkg válido: $f"; return 1; }
+      printf '%s\n' "$out" | head -20
       read -rp "¿Instalar con sudo? [s/N] " r
       [[ "$r" =~ ^[sSyY]$ ]] || return 0
       sudo installer -pkg "$f" -target / ;;
     *.dmg)
       local mp app
-      mp="$(hdiutil attach -nobrowse "$f" | awk -F'\t' '/\/Volumes\// {print $NF}' | tail -1)"
+      mp="$(hdiutil attach -nobrowse -noautoopen "$f" | awk -F'\t' '/\/Volumes\// {print $NF}' | tail -1)"
       [ -n "$mp" ] || { echo "No pude montar: $f"; return 1; }
-      app="$(find "$mp" -maxdepth 2 -name '*.app' -print -quit)"
+      app="$(find "$mp" -maxdepth 2 -name '*.app' | head -1)"
       if [ -n "$app" ]; then
         mkdir -p ~/Applications
         cp -R "$app" ~/Applications/ && echo "Listo: ~/Applications/$(basename "$app")"
@@ -74,7 +76,7 @@ desinstalar() {
     return
   fi
   if dpkg -s "$1" &>/dev/null; then
-    sudo apt remove -y "$1"
+    sudo apt remove "$1"
   else
     echo "No hay un paquete llamado '$1'. Coincidencias:"
     dpkg -l | awk '/^ii/ {print "  " $2}' | grep -i "$1" || echo "  (ninguna)"

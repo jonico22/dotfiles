@@ -3,7 +3,9 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ['mac/**', 'install.sh', 'files.sh', '.bash*']
+    paths: ['mac/**', 'install.sh', 'files.sh', '.bash*', 'ghostty/**', 'direnv/**', '.github/workflows/macos.yml']
+  pull_request:
+    paths: ['mac/**', 'install.sh', 'files.sh', '.bash*', 'ghostty/**', 'direnv/**', '.github/workflows/macos.yml']
 
 jobs:
   shellcheck:
@@ -21,3 +23,8 @@ jobs:
       - name: Comprobar programas
         run: |
           bash -lc 'for c in starship zed herdr; do command -v "$c" >/dev/null || { echo "falta $c"; exit 1; }; done; [ -d /Applications/Ghostty.app ] || { echo "falta Ghostty.app"; exit 1; }'
+      - name: Comprobar bash de Homebrew interactivo
+        run: |
+          "$(brew --prefix)/bin/bash" -ic 'echo $BASH_VERSION; for c in starship zoxide eza fzf; do type "$c" || exit 1; done'
+      - name: Segunda ejecución (idempotencia)
+        run: ./install.sh terminal dev < /dev/null

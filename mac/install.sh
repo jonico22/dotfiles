@@ -4,7 +4,8 @@
 # Uso: ./install.sh [grupo ...|todo]   Sin grupos: pregunta uno por uno.
 # Se puede ejecutar varias veces: lo ya instalado se salta.
 set -e
-cd "$(dirname "$0")/.."
+SCRIPT="$(cd "$(dirname "$0")" && pwd)/$(basename "$0")"
+cd "$(dirname "$SCRIPT")/.."
 source ./files.sh
 GRUPOS=(terminal dev ia documentos multimedia escritorio)
 pregunta() { read -rp "$1 [s/N] " r; [[ "$r" =~ ^[sSyY]$ ]]; }
@@ -17,7 +18,7 @@ tmp="$(mktemp -d)"; trap 'rm -rf "$tmp"' EXIT
 elegidos=()
 for a in "$@"; do
   case "$a" in
-    -h|--help) sed -n '2,5p' "$0" | sed 's/^# //'; echo "Grupos: ${GRUPOS[*]}"; exit 0 ;;
+    -h|--help) sed -n '2,5p' "$SCRIPT" | sed 's/^# //'; echo "Grupos: ${GRUPOS[*]}"; exit 0 ;;
     todo) elegidos=("${GRUPOS[@]}") ;;
     *) [[ " ${GRUPOS[*]} " == *" $a "* ]] || { echo "Grupo desconocido: $a (grupos: ${GRUPOS[*]}, todo)"; exit 1; }
        elegidos+=("$a") ;;
@@ -45,6 +46,8 @@ if ! command -v brew >/dev/null; then
     cargar_brew
   fi
 fi
+# Si la app ya se instaló a mano, que brew la adopte en vez de fallar
+export HOMEBREW_CASK_OPTS="${HOMEBREW_CASK_OPTS:+$HOMEBREW_CASK_OPTS }--adopt"
 if command -v brew >/dev/null; then hay_brew=si; else
   hay_brew=no
   aviso "Homebrew no está disponible: solo se copian las configs, no se instalan programas."
@@ -156,26 +159,41 @@ if quiere escritorio; then
   brew_grupo escritorio
   # Elgato (opcional, solo si tienes Stream Deck o micrófono Wave)
   if [ "$hay_brew" = si ] && pregunta "¿Tienes Stream Deck o micrófono Elgato Wave? (instala Stream Deck y Wave Link)"; then
-    brew install --cask elgato-stream-deck elgato-wave-link || aviso "falló Elgato"
+    brew install --cask elgato-stream-deck || aviso "falló Elgato Stream Deck"
+    brew install --cask elgato-wave-link || aviso "falló Elgato Wave Link (exige macOS 15 o superior)"
   fi
   if pregunta "¿Aplicar ajustes de macOS (mac/defaults.sh)?"; then
     bash mac/defaults.sh || aviso "fallaron los ajustes de macOS"
   fi
 fi
 
-# --- Ghostty usa el bash de Homebrew: la ruta en ghostty/macos debe coincidir ---
-if [ "$hay_brew" = si ] && [ "$(brew --prefix)/bin/bash" != /opt/homebrew/bin/bash ]; then
-  aviso "el bash de Homebrew está en $(brew --prefix)/bin/bash: cambia 'command' en ~/.config/ghostty/os (y en ghostty/macos)."
-fi
+# --- Ghostty usa el bash de Homebrew: se ajusta la ruta de ghostty/macos al prefijo real ---
+prefijo=/opt/homebrew
+[ "$hay_brew" = si ] && prefijo="$(brew --prefix)"
 
 # === Copiar configs (siempre; respalda las existentes como .bak) ===
 for par in "${FILES[@]}"; do
   src="${par%%:*}"; dst="${par#*:}"
   [ -f "$dst" ] || { aviso "falta $dst en el repo"; continue; }
   mkdir -p "$(dirname "$src")"
+  if [ "$dst" = ghostty/macos ]; then
+    # Sin Homebrew no hay bash 5: se usa /bin/bash en vez de una ruta inexistente
+    if [ "$hay_brew" = si ]; then sed "s|/opt/homebrew|$prefijo|" "$dst" > "$tmp/os"
+    else
+      aviso "sin Homebrew, Ghostty usará /bin/bash"
+      sed "s|/opt/homebrew/bin/bash|/bin/bash|" "$dst" > "$tmp/os"
+    fi
+    dst="$tmp/os"
+  fi
   if [ -f "$src" ] && ! cmp -s "$src" "$dst"; then cp "$src" "$src.bak"; fi
   cp "$dst" "$src"
 done
+
+# Plugins de LazyVim fijados en lazy-lock.json (necesita ~/.config/nvim ya copiado)
+if quiere dev && command -v nvim >/dev/null; then
+  echo "[dev] Neovim: instalando plugins (lazy-lock.json)"
+  nvim --headless "+Lazy! restore" +qa </dev/null || aviso "falló la instalación de plugins de Neovim (se instalarán al abrir nvim)"
+fi
 
 echo
 if [ ${#AVISOS[@]} -gt 0 ]; then

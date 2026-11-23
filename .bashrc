@@ -17,16 +17,11 @@ case $- in
       *) return;;
 esac
 
-# don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
-HISTCONTROL=ignoreboth
-
-# append to the history file, don't overwrite it
+# Historial: sin duplicados, se añade al archivo y es grande
+HISTSIZE=10000
+HISTFILESIZE=20000
+HISTCONTROL=ignoreboth:erasedups
 shopt -s histappend
-
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -130,6 +125,8 @@ if ! shopt -oq posix; then
     . /usr/share/bash-completion/bash_completion
   elif [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
+  elif [ -n "${HOMEBREW_PREFIX:-}" ] && [ -r "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh" ]; then
+    . "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"
   fi
 fi
 # Nix (solo si existe; en macOS no se usa)
@@ -137,7 +134,8 @@ if [ -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then
   . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
   export NIX_CONFIG='experimental-features = nix-command flakes'
 fi
-alias ver='celluloid'
+# Reproductor de vídeo: mpv en Linux, IINA en macOS
+if [ "$(uname)" = Darwin ]; then alias ver='open -a IINA'; else alias ver='mpv'; fi
 export PATH="$HOME/.local/bin:$PATH"
 export EDITOR=nvim VISUAL=nvim
 export PNPM_HOME="$HOME/.local/share/pnpm"
@@ -146,16 +144,12 @@ export PATH="$PNPM_HOME/bin:$PNPM_HOME:$PATH"
 # --- Herramientas dev ---
 command -v starship >/dev/null && eval "$(starship init bash)"
 command -v zoxide >/dev/null && eval "$(zoxide init bash)"
+command -v mise >/dev/null && eval "$(mise activate bash)"
 
 # fzf (atajos Ctrl+R / Ctrl+T / Alt+C)
-if fzf --bash >/dev/null 2>&1; then eval "$(fzf --bash)"
+if _f="$(fzf --bash 2>/dev/null)" && [ -n "$_f" ]; then eval "$_f"
 elif [ -f /usr/share/doc/fzf/examples/key-bindings.bash ]; then source /usr/share/doc/fzf/examples/key-bindings.bash; fi
-
-# Historial más útil
-HISTSIZE=10000
-HISTFILESIZE=20000
-HISTCONTROL=ignoreboth:erasedups
-shopt -s histappend
+unset _f
 
 # Alias
 # Alias que funcionan con Nix (bat, fd) o con apt (batcat, fdfind)
@@ -170,9 +164,9 @@ if command -v fdfind >/dev/null; then export FD=fdfind; alias fd='fdfind'; else 
 alias gs='git status'
 alias gl='git log --oneline --graph --decorate -20'
 
-# ble.sh debe ir al final
 command -v direnv >/dev/null && eval "$(direnv hook bash)"
 [ -f ~/.bash_traductor ] && source ~/.bash_traductor
 [ -f ~/.bash_instalar ] && source ~/.bash_instalar
 [ -f ~/.bash_explorar ] && source ~/.bash_explorar
+# ble.sh debe ir al final
 [[ ! ${BLE_VERSION-} ]] || ble-attach

@@ -1,3 +1,9 @@
 # macOS: Ghostty abre "bash --login", que lee este archivo y no ~/.bashrc.
+# PATH de Homebrew también en shells login no interactivos (bash -lc, CI)
+if [ -z "${HOMEBREW_PREFIX:-}" ]; then
+  for _h in /opt/homebrew/bin/brew /usr/local/bin/brew; do
+    [ -x "$_h" ] && { eval "$("$_h" shellenv)"; break; }
+  done; unset _h
+fi
 [ -f ~/.profile ] && . ~/.profile
 case $- in *i*) [ -f ~/.bashrc ] && . ~/.bashrc ;; esac
