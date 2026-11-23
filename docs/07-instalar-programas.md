@@ -15,6 +15,14 @@ nix profile list                   # ver lo instalado      (atajo: nixl)
 nix profile remove nombre          # quitar                 (atajo: nixr nombre)
 ```
 
+## Homebrew (macOS)
+```bash
+brew search nombre            # buscar
+brew install nombre           # instalar una fórmula (usa --cask para apps)
+brew bundle --file=mac/Brewfile.dev   # instalar un grupo
+```
+Después de instalar, anótalo en su `mac/Brewfile.<grupo>` (`backup.sh` avisa si falta alguno).
+
 ## Flatpak
 ```bash
 flatpak install --user flathub app.drey.Dialect

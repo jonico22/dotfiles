@@ -1,0 +1,2 @@
+# IA: Codex CLI (Ollama, mlx-lm y los demás agentes los instala install.sh)
+cask "codex"

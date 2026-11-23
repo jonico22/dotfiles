@@ -1,0 +1,8 @@
+# Base: bash 5, prompt Starship, fuente con íconos (siempre)
+brew "bash"
+brew "starship"
+brew "uv"
+brew "git"
+# ble.sh (se instala aparte) necesita GNU awk; el awk de macOS falla con algunos caracteres
+brew "gawk"
+cask "font-jetbrains-mono-nerd-font"

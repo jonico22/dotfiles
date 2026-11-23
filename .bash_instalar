@@ -1,6 +1,7 @@
-# Instalar programas descargados (.deb / .AppImage)
+# Instalar programas descargados (.deb / .AppImage en Linux; .dmg / .pkg en macOS)
 instalar() {
   local f="$1"
+  if [ "$(uname)" = Darwin ]; then _instalar_mac "$f"; return; fi
   if [ -z "$f" ]; then
     local dl; dl="$(xdg-user-dir DOWNLOAD 2>/dev/null || echo ~/Descargas)"
     f="$(ls -t "$dl"/*.deb "$dl"/*.AppImage "$dl"/*.appimage 2>/dev/null | head -1)"
@@ -26,9 +27,52 @@ instalar() {
   esac
 }
 
+# macOS: .pkg (con confirmación) o .dmg (copia el .app a ~/Applications)
+_instalar_mac() {
+  local f="$1" r
+  if [ -z "$f" ]; then
+    local dl=~/Downloads
+    f="$(ls -t "$dl"/*.dmg "$dl"/*.pkg 2>/dev/null | head -1)"
+    [ -z "$f" ] && { echo "No encontré .dmg ni .pkg en $dl"; return 1; }
+    echo "Último descargado: $(basename "$f") ($(date -r "$f" '+%F %R'))"
+  fi
+  [ -f "$f" ] || { echo "No existe: $f"; return 1; }
+  case "$f" in
+    *.pkg)
+      # Se muestra qué contiene antes de instalarlo como root; por defecto, No.
+      pkgutil --payload-files "$f" 2>/dev/null | head -20 \
+        || { echo "No es un .pkg válido: $f"; return 1; }
+      read -rp "¿Instalar con sudo? [s/N] " r
+      [[ "$r" =~ ^[sSyY]$ ]] || return 0
+      sudo installer -pkg "$f" -target / ;;
+    *.dmg)
+      local mp app
+      mp="$(hdiutil attach -nobrowse "$f" | awk -F'\t' '/\/Volumes\// {print $NF}' | tail -1)"
+      [ -n "$mp" ] || { echo "No pude montar: $f"; return 1; }
+      app="$(find "$mp" -maxdepth 2 -name '*.app' -print -quit)"
+      if [ -n "$app" ]; then
+        mkdir -p ~/Applications
+        cp -R "$app" ~/Applications/ && echo "Listo: ~/Applications/$(basename "$app")"
+      else
+        echo "No hay .app en $mp (puede traer un .pkg: ábrelo con instalar <archivo.pkg>)"
+      fi
+      hdiutil detach "$mp" -quiet ;;
+    *) echo "Formato no soportado: $f (solo .dmg o .pkg)" ;;
+  esac
+}
+
 # Desinstalar por nombre (busca coincidencias si no es exacto)
 desinstalar() {
   [ -z "$1" ] && { echo "Uso: desinstalar <nombre>"; return 1; }
+  if [ "$(uname)" = Darwin ]; then
+    if brew list "$1" &>/dev/null; then
+      brew uninstall "$1"
+    else
+      echo "No hay una fórmula/cask llamada '$1'. Coincidencias:"
+      brew list | sed 's/^/  /' | grep -i "$1" || echo "  (ninguna)"
+    fi
+    return
+  fi
   if dpkg -s "$1" &>/dev/null; then
     sudo apt remove -y "$1"
   else

@@ -5,6 +5,7 @@
 # Se puede ejecutar varias veces: lo ya instalado se salta.
 set -e
 cd "$(dirname "$0")"
+[ "$(uname)" = Darwin ] && exec bash mac/install.sh "$@"
 source ./files.sh
 GRUPOS=(terminal dev ia documentos multimedia escritorio)
 pregunta() { read -rp "$1 [s/N] " r; [[ "$r" =~ ^[sSyY]$ ]]; }
@@ -203,7 +204,10 @@ if quiere ia; then
   if ! command -v agy >/dev/null && pregunta "  ¿Antigravity CLI (agy, de Google)?"; then
     curl -fsSL https://antigravity.google/cli/install.sh | bash || aviso "falló Antigravity CLI"
     # Su instalador añade ~/.local/bin al PATH en .bashrc y .profile aunque ya esté: se quita el duplicado.
-    sed -i '/^# Added by Antigravity CLI installer$/,+1d' ~/.bashrc ~/.profile 2>/dev/null || true
+    for _f in ~/.bashrc ~/.profile; do
+      [ -f "$_f" ] && awk '/^# Added by Antigravity CLI installer$/ {skip=2} skip>0 {skip--; next} 1' "$_f" > "$_f.tmp" \
+        && cat "$_f.tmp" > "$_f"; rm -f "$_f.tmp"
+    done
   fi
   # OpenCode 1 (la 2, que es la de nixpkgs, aún tiene fallos). Para pasar a la 2: opencode upgrade --major
   if ! command -v opencode >/dev/null && pregunta "  ¿OpenCode 1?"; then

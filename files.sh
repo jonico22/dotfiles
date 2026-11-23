@@ -12,9 +12,6 @@ FILES=(
   "$HOME/.config/ghostty/config:ghostty/config"
   "$HOME/.config/starship.toml:starship/starship.toml"
   "$HOME/.config/lazygit/config.yml:lazygit/config.yml"
-  "$HOME/.config/ulauncher/settings.json:ulauncher/settings.json"
-  "$HOME/.config/ulauncher/shortcuts.json:ulauncher/shortcuts.json"
-  "$HOME/.config/ulauncher/extensions.json:ulauncher/extensions.json"
   "$HOME/.config/direnv/direnvrc:direnv/direnvrc"
   "$HOME/.config/nvim/init.lua:nvim/init.lua"
   "$HOME/.config/nvim/lazyvim.json:nvim/lazyvim.json"
@@ -27,9 +24,23 @@ FILES=(
   "$HOME/.config/nvim/lua/plugins/diffview.lua:nvim/lua/plugins/diffview.lua"
   "$HOME/.config/nvim/lazy-lock.json:nvim/lazy-lock.json"
   "$HOME/.config/herdr/config.toml:herdr/config.toml"
-  "$HOME/.config/wireplumber/wireplumber.conf.d/51-elgato-wave.conf:wireplumber/51-elgato-wave.conf"
   "$HOME/.markdownlint-cli2.yaml:.markdownlint-cli2.yaml"
 )
+# Solo Linux
+FILES_LINUX=(
+  "$HOME/.config/ulauncher/settings.json:ulauncher/settings.json"
+  "$HOME/.config/ulauncher/shortcuts.json:ulauncher/shortcuts.json"
+  "$HOME/.config/ulauncher/extensions.json:ulauncher/extensions.json"
+  "$HOME/.config/wireplumber/wireplumber.conf.d/51-elgato-wave.conf:wireplumber/51-elgato-wave.conf"
+  "$HOME/.config/ghostty/os:ghostty/linux"
+)
+# Solo macOS
+FILES_MAC=(
+  "$HOME/.bash_profile:mac/bash_profile"
+  "$HOME/.config/ghostty/os:ghostty/macos"
+)
+# install.sh y backup.sh solo iteran FILES: se le suman los del sistema actual
+if [ "$(uname)" = Darwin ]; then FILES+=("${FILES_MAC[@]}"); else FILES+=("${FILES_LINUX[@]}"); fi
 # Rutas dconf a versionar (gnome/<nombre>.ini)
 GNOME_PATHS=(
   /org/gnome/mutter/

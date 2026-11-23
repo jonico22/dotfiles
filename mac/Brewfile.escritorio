@@ -1,0 +1,3 @@
+# Escritorio: Rectangle (ventanas), Maccy (portapapeles), Elgato y ajustes de macOS
+cask "rectangle"
+cask "maccy"

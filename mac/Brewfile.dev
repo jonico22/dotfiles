@@ -1,0 +1,23 @@
+# Desarrollo: git, gh, lazygit, neovim, node, mise, clientes de API y BD, Zed, OrbStack
+brew "git"
+brew "gh"
+brew "lazygit"
+brew "git-delta"
+brew "difftastic"
+brew "neovim"
+brew "tree-sitter-cli"
+brew "node"
+brew "pnpm"
+# Python no tiene fórmula sin versión: se usa con mise (mise use -g python)
+brew "mise"
+brew "just"
+brew "xh"
+brew "hurl"
+brew "posting"
+brew "lazydocker"
+cask "zed"
+# Docker/contenedores ligero para Mac
+cask "orbstack"
+cask "yaak"
+# Cliente de BD nativo (Swift); alternativa: cask "tableplus"
+cask "tablepro"

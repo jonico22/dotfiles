@@ -238,6 +238,32 @@ si las apps de Nix o Flatpak no salen en el menú, cierra sesión y vuelve a ent
 
 `backup.sh` te avisa si hay paquetes Nix instalados que no están en ningún grupo.
 
+## 🍎 macOS
+
+Mismo flujo, pero con **Homebrew** en lugar de Nix. En un Mac nuevo:
+
+```bash
+git clone https://github.com/<tu-usuario>/dotfiles.git ~/dotfiles && ~/dotfiles/install.sh
+```
+
+`install.sh` detecta macOS y usa `mac/install.sh` (compatible con el bash 3.2 del sistema). Los grupos son los mismos
+y cada uno es un `mac/Brewfile.<grupo>`. Si falta Homebrew, ofrece instalarlo (hace falta un usuario administrador).
+Ghostty abre el bash de Homebrew; si tu brew está en `/usr/local` (Mac Intel), cambia `command` en `~/.config/ghostty/os`.
+
+| En Linux | En macOS |
+|---|---|
+| Nix (`packages/nix/`) | Homebrew (`mac/Brewfile.*`); `backup.sh` avisa de lo instalado que no está en ninguno |
+| Ollama como servicio systemd | `brew services start ollama`, y `mlx-lm` opcional (solo Apple Silicon) |
+| Ulauncher | Nada (sin launcher) |
+| Docker / podman | [OrbStack](https://orbstack.dev) |
+| mpv | [IINA](https://iina.io) |
+| DBeaver | [TablePro](https://github.com/datlechin/TablePro) (nativo; alternativa: `tableplus`) |
+| CopyQ | [Maccy](https://maccy.app) |
+| Tiling Assistant / Tactile | [Rectangle](https://rectangleapp.com) |
+| Ajustes de GNOME (`gnome/apply.sh`) | `mac/defaults.sh` (Finder, teclado, capturas), opcional |
+
+No hay en Mac: GNOME, Ulauncher, EasyEffects / qpwgraph ni Flatpak. Python se usa con mise (`mise use -g python`).
+
 ## 🔄 Guardar cambios
 
 Después de modificar la configuración:

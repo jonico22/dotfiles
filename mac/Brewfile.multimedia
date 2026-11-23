@@ -1,0 +1,3 @@
+# Multimedia: yt-dlp e IINA (reproductor)
+brew "yt-dlp"
+cask "iina"

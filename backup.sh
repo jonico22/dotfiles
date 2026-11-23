@@ -35,13 +35,23 @@ if command -v nix >/dev/null; then
   [ -n "$sinlista" ] && echo "Aviso: paquetes Nix instalados que no están en ningún grupo de packages/nix/ (añádelos al que toque):" \
     && echo "$sinlista" | sed 's/^/  /'
 fi
+# Homebrew (macOS): lo mismo, contra mac/Brewfile.*
+if [ "$(uname)" = Darwin ] && command -v brew >/dev/null; then
+  sinbrew=$(comm -23 \
+    <({ brew leaves --installed-on-request; brew list --cask; } 2>/dev/null | sort -u) \
+    <({ cat mac/Brewfile.* | sed -nE 's/^(brew|cask) "([^"]+)".*/\2/p'
+        # los que install.sh instala aparte (Ollama, MLX, Elgato)
+        printf '%s\n' ollama mlx-lm elgato-stream-deck elgato-wave-link; } | sort -u))
+  [ -n "$sinbrew" ] && echo "Aviso: programas de Homebrew instalados que no están en ningún mac/Brewfile.* (añádelos al que toque):" \
+    && echo "$sinbrew" | sed 's/^/  /'
+fi
 command -v flatpak >/dev/null && flatpak list --app --columns=application > packages/flatpak.txt
 command -v ollama >/dev/null && ollama list | awk 'NR>1{print $1"  # "$3" "$4}' | sort > packages/ollama.txt
 # apt.txt se mantiene a mano
 
 # Solo se añaden las rutas conocidas (no "git add ." para no subir archivos sueltos).
 rutas=()
-for d in gnome packages "${FILES[@]#*:}"; do
+for d in gnome packages mac "${FILES[@]#*:}"; do
   # git add falla entero si una ruta no existe ni está versionada
   { [ -e "$d" ] || git ls-files --error-unmatch -- "$d" >/dev/null 2>&1; } && rutas+=("$d")
 done

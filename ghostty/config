@@ -1,9 +1,6 @@
-keybind = ctrl+v=paste_from_clipboard
-
 # Tema (para ver todos: ghostty +list-themes)
 theme = Catppuccin Mocha
 background = #11111b
-background-opacity = 0.75
 
 # Fuente
 font-family = JetBrainsMono Nerd Font
@@ -27,3 +24,6 @@ shell-integration-features = cursor,sudo,title
 copy-on-select = clipboard
 confirm-close-surface = false
 mouse-hide-while-typing = true
+
+# Específico del sistema (ghostty/linux o ghostty/macos, instalado como os)
+config-file = ?os

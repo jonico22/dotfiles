@@ -1,0 +1,12 @@
+# Documentos: pandoc, imagemagick, PDF (poppler, qpdf, ocrmypdf), OCR, exiftool, 7z, ffmpeg
+brew "pandoc"
+brew "imagemagick"
+brew "ghostscript"
+brew "poppler"
+brew "qpdf"
+brew "ocrmypdf"
+brew "tesseract"
+brew "exiftool"
+brew "sevenzip"
+brew "unar"
+brew "ffmpeg"

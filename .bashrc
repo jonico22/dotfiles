@@ -1,5 +1,10 @@
-# ble.sh (autosugerencias): de Nix o de ~/.local
-for _b in ~/.nix-profile/share/blesh/ble.sh ~/.local/share/blesh/ble.sh; do
+# Sistema: en macOS se carga Homebrew antes que nada (ble.sh y herramientas salen de ahí)
+[ "$(uname)" = Darwin ] && for _h in /opt/homebrew/bin/brew /usr/local/bin/brew; do
+  [ -x "$_h" ] && { eval "$("$_h" shellenv)"; break; }
+done; unset _h
+
+# ble.sh (autosugerencias): de Nix, de ~/.local o de Homebrew
+for _b in ~/.nix-profile/share/blesh/ble.sh ~/.local/share/blesh/ble.sh ${HOMEBREW_PREFIX:+"$HOMEBREW_PREFIX/share/blesh/ble.sh"}; do
   [[ $- == *i* && -f $_b ]] && { source "$_b" --noattach; break; }
 done; unset _b
 # ~/.bashrc: executed by bash(1) for non-login shells.
@@ -86,6 +91,10 @@ if [ -x /usr/bin/dircolors ]; then
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
+elif [ "$(uname)" = Darwin ]; then
+    # ls de BSD: -G en vez de --color
+    alias ls='ls -G'
+    alias grep='grep --color=auto'
 fi
 
 # colored GCC warnings and errors
@@ -98,7 +107,11 @@ alias l='ls -CF'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
+if [ "$(uname)" = Darwin ]; then
+alias alert='osascript -e "display notification \"$(history|tail -n1|sed -e '\''s/^[[:space:]]*[0-9]*[[:space:]]*//;s/[;&|][[:space:]]*alert$//'\'')\" with title \"Terminal\""'
+else
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+fi
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -119,8 +132,11 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-[ -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ] && . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
-export NIX_CONFIG='experimental-features = nix-command flakes'
+# Nix (solo si existe; en macOS no se usa)
+if [ -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then
+  . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+  export NIX_CONFIG='experimental-features = nix-command flakes'
+fi
 alias ver='celluloid'
 export PATH="$HOME/.local/bin:$PATH"
 export EDITOR=nvim VISUAL=nvim
