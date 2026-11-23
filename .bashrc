@@ -121,8 +121,6 @@ if ! shopt -oq posix; then
 fi
 [ -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ] && . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 export NIX_CONFIG='experimental-features = nix-command flakes'
-# Ghostty de Nix necesita nixGL (OpenGL); la de apt no
-[ -x ~/.nix-profile/bin/ghostty ] && command -v nixGL >/dev/null && alias ghostty='nixGL ghostty'
 alias ver='celluloid'
 export PATH="$HOME/.local/bin:$PATH"
 export EDITOR=nvim VISUAL=nvim

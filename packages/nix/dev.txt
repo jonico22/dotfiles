@@ -20,5 +20,3 @@ lazydocker
 podman
 meld
 dbeaver-bin
-lapce
-zed-editor

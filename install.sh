@@ -138,13 +138,14 @@ fi
 if quiere terminal; then
   nix_grupo terminal
   command -v tldr >/dev/null && { tldr --update >/dev/null 2>&1 || true; }
+  # Ghostty solo nativo (apt): la de Nix da problemas de OpenGL/interfaz fuera de NixOS.
   if ! command -v ghostty >/dev/null; then
     if [ "$root" = si ] && apt-cache show ghostty >/dev/null 2>&1; then
-      sudo apt install -y ghostty || aviso "falló Ghostty (apt)"   # la de Ubuntu no necesita nixGL
-    elif [ "$hay_nix" = si ]; then
-      nix profile add nixpkgs#ghostty && nixgl || aviso "falló Ghostty (Nix)"
+      sudo apt install -y ghostty || aviso "falló Ghostty (apt)"
+    elif [ "$root" = si ]; then
+      aviso "Ghostty no está en los repos de apt: instálalo a mano (https://ghostty.org/docs/install/binary)"
     else
-      aviso "no se pudo instalar Ghostty (ni apt ni Nix)"
+      aviso "Ghostty no se instaló: sin root no hay apt (instálalo a mano: https://ghostty.org/docs/install/binary)"
     fi
   fi
 fi
@@ -152,8 +153,16 @@ fi
 # === dev ===
 if quiere dev; then
   nix_grupo dev
-  nixgl                                  # zed, lapce, meld y dbeaver son gráficas
+  nixgl                                  # meld y dbeaver son gráficas
   flatpak_user com.usebruno.Bruno        # la versión de Nix falla por el sandbox de Electron
+  # Zed nativo con su instalador oficial (en ~/.local, sin sudo): el de Nix falla fuera de NixOS.
+  if [ ! -x ~/.local/bin/zed ] && ! command -v zed >/dev/null; then
+    if command -v curl >/dev/null; then
+      curl -fsSL -o "$tmp/zed-install" https://zed.dev/install.sh && sh "$tmp/zed-install" || aviso "falló Zed"
+    else
+      aviso "falta curl: no se instala Zed"
+    fi
+  fi
 fi
 
 # === ia ===

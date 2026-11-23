@@ -35,8 +35,8 @@ en tu usuario (`~/.nix-profile`), sin sudo. Cada lista está en `packages/nix/<g
 | Grupo | Qué trae |
 |---|---|
 | **base** (siempre) | Copia las configs · [Starship](https://starship.rs) (prompt) · [ble.sh](https://github.com/akinomyoga/ble.sh) (autosugerencias) · [JetBrainsMono Nerd Font](https://www.nerdfonts.com) |
-| **terminal** | [Ghostty](https://ghostty.org) · fzf · zoxide · eza · bat · ripgrep · fd · btop · tldr · glow · jq / yq · dust / duf · hyperfine · direnv + nix-direnv · [herdr](https://github.com/herdrdev/herdr) · wl-clipboard · translate-shell |
-| **dev** | git · gh · lazygit · delta · neovim (+ gcc, tree-sitter, nil, nixfmt) · nodejs · pnpm · python3 · mise · just · xh · hurl · posting · lazydocker · podman · meld · dbeaver · lapce · [Zed](https://zed.dev) · [Bruno](https://www.usebruno.com) (Flatpak) |
+| **terminal** | [Ghostty](https://ghostty.org) (apt) · fzf · zoxide · eza · bat · ripgrep · fd · btop · tldr · glow · jq / yq · dust / duf · hyperfine · direnv + nix-direnv · [herdr](https://github.com/herdrdev/herdr) · wl-clipboard · translate-shell |
+| **dev** | git · gh · lazygit · delta · neovim (+ gcc, tree-sitter, nil, nixfmt) · nodejs · pnpm · python3 · mise · just · xh · hurl · posting · lazydocker · podman · meld · dbeaver · [Zed](https://zed.dev) (instalador oficial) · [Bruno](https://www.usebruno.com) (Flatpak) |
 | **ia** | codex · [Ollama](https://ollama.com) como servicio de tu usuario + modelos (pregunta uno por uno, ~22 GB en total) · y, si dices que sí, Claude Code, agy y OpenCode 1 con su instalador oficial |
 | **documentos** | pandoc · imagemagick · ghostscript · poppler · qpdf · ocrmypdf + tesseract · exiftool · 7zz / unar · ffmpeg · docling · markitdown |
 | **multimedia** | mpv · yt-dlp · easyeffects · qpwgraph |
@@ -46,8 +46,9 @@ Notas sobre algunos paquetes:
 
 | Paquete | Nota |
 |---|---|
-| Ghostty | Con root y si Ubuntu lo trae, se instala con apt (no necesita nada más). Si no, con Nix + [nixGL](https://github.com/nix-community/nixGL) |
-| nixGL | Las apps gráficas de Nix (Ghostty, Zed, lapce, meld, dbeaver, mpv…) lo necesitan fuera de NixOS. Si una abre con errores de OpenGL: `nixGL <app>` |
+| Ghostty | Solo nativo: con root se instala con apt. No se usa la de Nix (fuera de NixOS da problemas de interfaz/OpenGL). Sin root, `install.sh` avisa |
+| Zed | Nativo con su instalador oficial (`~/.local/bin/zed`, sin sudo). No se usa el de Nix por el mismo motivo |
+| nixGL | Las apps gráficas de Nix (meld, dbeaver, mpv…) lo necesitan fuera de NixOS. Si una abre con errores de OpenGL: `nixGL <app>` |
 | direnv + nix-direnv | Al entrar a una carpeta de proyecto carga solo sus variables `.env` y su entorno de Nix, y al salir los descarga |
 | docling | PDFs con tablas, columnas y fórmulas a Markdown (~1,4 GB de RAM, ~8 s por página con CPU). Depende de un paquete no libre: `install.sh` lo permite **solo** en el grupo documentos |
 | markitdown | PDF, Word, Excel y PowerPoint a Markdown. Se instala con `packages/markitdown.nix` (el de nixpkgs viene sin soporte de PDF/Office) |

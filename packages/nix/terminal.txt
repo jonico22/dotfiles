@@ -1,4 +1,4 @@
-# Herramientas de terminal (Ghostty + nixGL se instalan aparte en install.sh)
+# Herramientas de terminal (Ghostty se instala aparte con apt en install.sh)
 fzf
 zoxide
 eza
