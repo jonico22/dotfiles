@@ -1,5 +1,2 @@
 # Vídeo y audio
-mpv
 yt-dlp
-easyeffects
-qpwgraph

@@ -1,3 +1,1 @@
 # Escritorio GNOME (además: ajustes dconf, Flatpak --user y Elgato opcional)
-copyq
-ulauncher

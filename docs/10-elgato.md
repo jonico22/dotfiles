@@ -10,10 +10,10 @@
 |---|---|---|
 | [OpenDeck](https://github.com/nekename/OpenDeck) | Flatpak (Flathub) | Configurar los botones y diales del Stream Deck sin `sudo` |
 | [Pipeweaver](https://github.com/pipeweaver/pipeweaver) | Flatpak `--user` (repo del autor, sin `sudo`) | Mezclador tipo Wave Link: canales separados para sistema, navegador y micrófono |
-| EasyEffects | Nix | Filtros para el micrófono (ruido, compresor, ecualizador) |
-| qpwgraph | Nix | Ver y conectar el audio de PipeWire de forma visual |
+| EasyEffects | apt (sin root: Flatpak) | Filtros para el micrófono (ruido, compresor, ecualizador) |
+| qpwgraph | apt (sin root: Flatpak) | Ver y conectar el audio de PipeWire de forma visual |
 
-EasyEffects y qpwgraph están en el grupo multimedia (`packages/nix/multimedia.txt`) porque sirven con cualquier micrófono.
+EasyEffects y qpwgraph están en el grupo multimedia (`packages/nativas.txt`) porque sirven con cualquier micrófono.
 
 ## Configuración
 

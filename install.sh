@@ -117,6 +117,26 @@ flatpak_user() {
   done
 }
 
+# Apps gráficas nativas de un grupo (packages/nativas.txt): apt con root, si no Flatpak --user, si no Nix.
+nativas() {
+  local g="$1" grupo apt fp nx nombre
+  while read -r grupo apt fp nx; do
+    [ "$grupo" = "$g" ] || continue
+    nombre="$apt"; [ "$nombre" = - ] && nombre="$fp"
+    if [ "$apt" != - ]; then command -v "$apt" >/dev/null && continue; fi
+    if [ "$fp" != - ] && command -v flatpak >/dev/null && flatpak info "$fp" >/dev/null 2>&1; then continue; fi
+    if [ "$apt" != - ] && [ "$root" = si ] && apt-cache show "$apt" >/dev/null 2>&1; then
+      sudo apt install -y "$apt" </dev/null || aviso "falló $apt (apt)"
+    elif [ "$fp" != - ] && command -v flatpak >/dev/null; then
+      flatpak_user "$fp" </dev/null
+    elif [ "$nx" != - ] && [ "$hay_nix" = si ]; then
+      { nix profile add "nixpkgs#$nx" && nixgl; } </dev/null || aviso "falló $nx (Nix)"
+    else
+      aviso "no se instaló $nombre: no hay apt con root ni Flatpak que la traiga"
+    fi
+  done < <(grep -vE '^\s*(#|$)' packages/nativas.txt)
+}
+
 # === base (siempre) ===
 nix_grupo base
 if [ "$hay_nix" = no ] && [ ! -f ~/.local/share/blesh/ble.sh ]; then
@@ -138,22 +158,13 @@ fi
 if quiere terminal; then
   nix_grupo terminal
   command -v tldr >/dev/null && { tldr --update >/dev/null 2>&1 || true; }
-  # Ghostty solo nativo (apt): la de Nix da problemas de OpenGL/interfaz fuera de NixOS.
-  if ! command -v ghostty >/dev/null; then
-    if [ "$root" = si ] && apt-cache show ghostty >/dev/null 2>&1; then
-      sudo apt install -y ghostty || aviso "falló Ghostty (apt)"
-    elif [ "$root" = si ]; then
-      aviso "Ghostty no está en los repos de apt: instálalo a mano (https://ghostty.org/docs/install/binary)"
-    else
-      aviso "Ghostty no se instaló: sin root no hay apt (instálalo a mano: https://ghostty.org/docs/install/binary)"
-    fi
-  fi
+  nativas terminal   # Ghostty solo por apt; sin root: https://ghostty.org/docs/install/binary
 fi
 
 # === dev ===
 if quiere dev; then
   nix_grupo dev
-  nixgl                                  # meld y dbeaver son gráficas
+  nativas dev                            # meld y dbeaver
   flatpak_user com.usebruno.Bruno        # la versión de Nix falla por el sandbox de Electron
   # Zed nativo con su instalador oficial (en ~/.local, sin sudo): el de Nix falla fuera de NixOS.
   if [ ! -x ~/.local/bin/zed ] && ! command -v zed >/dev/null; then
@@ -214,13 +225,18 @@ fi
 # === multimedia ===
 if quiere multimedia; then
   nix_grupo multimedia
-  nixgl
+  nativas multimedia
 fi
 
 # === escritorio ===
 if quiere escritorio; then
   nix_grupo escritorio
-  nixgl
+  # Ulauncher no está en los repos de Ubuntu: con root se añade su PPA oficial.
+  if [ "$root" = si ] && ! command -v ulauncher >/dev/null && ! apt-cache show ulauncher >/dev/null 2>&1 \
+     && command -v add-apt-repository >/dev/null; then
+    sudo add-apt-repository -y ppa:agornostal/ulauncher && sudo apt update || aviso "falló el PPA de Ulauncher"
+  fi
+  nativas escritorio
   mapfile -t apps < <(grep -vE '^\s*(#|$)' packages/flatpak.txt)
   [ ${#apps[@]} -gt 0 ] && flatpak_user "${apps[@]}"
   # Elgato (opcional, solo si tienes Stream Deck o micrófono Wave). Ver docs/10-elgato.md

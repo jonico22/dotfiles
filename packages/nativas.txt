@@ -1,0 +1,12 @@
+# Apps gráficas nativas: las de Nix dan problemas de interfaz/OpenGL fuera de NixOS.
+# Con root se usa apt; sin root (o si apt no la trae), Flatpak --user; si tampoco hay Flatpak, Nix + nixGL.
+# Si el programa ya está instalado (de cualquier forma), se salta. "-" = no hay esa opción.
+# grupo       apt          flatpak                        nix
+terminal      ghostty      -                              -
+dev           meld         org.gnome.meld                 -
+dev           -            io.dbeaver.DBeaverCommunity    -
+multimedia    mpv          io.mpv.Mpv                     -
+multimedia    easyeffects  com.github.wwmm.easyeffects    -
+multimedia    qpwgraph     org.rncbc.qpwgraph             -
+escritorio    copyq        com.github.hluk.copyq          -
+escritorio    ulauncher    -                              ulauncher

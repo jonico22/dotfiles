@@ -18,5 +18,3 @@ hurl
 posting
 lazydocker
 podman
-meld
-dbeaver-bin
