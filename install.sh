@@ -62,6 +62,7 @@ export NIX_CONFIG="experimental-features = nix-command flakes"
 cargar_nix() {
   local f
   for f in /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ~/.nix-profile/etc/profile.d/nix.sh; do
+    # shellcheck source=/dev/null
     [ -e "$f" ] && . "$f"
   done
   return 0

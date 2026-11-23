@@ -42,6 +42,7 @@ FILES_MAC=(
 # install.sh y backup.sh solo iteran FILES: se le suman los del sistema actual
 if [ "$(uname)" = Darwin ]; then FILES+=("${FILES_MAC[@]}"); else FILES+=("${FILES_LINUX[@]}"); fi
 # Rutas dconf a versionar (gnome/<nombre>.ini)
+# shellcheck disable=SC2034  # se usa en backup.sh y gnome/apply.sh
 GNOME_PATHS=(
   /org/gnome/mutter/
   /org/gnome/desktop/wm/preferences/
