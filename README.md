@@ -180,7 +180,8 @@ Para que `git push` use tu cuenta de GitHub: `gh auth login`.
 
 ## 🚀 Instalación en una PC nueva
 
-Pensado para Ubuntu (funciona en otras distros con Nix). **No ejecutes `install.sh` con `sudo`**:
+Pensado para Ubuntu (funciona en otras distros con Nix). En un Mac, mira [🍎 macOS](#-macos).
+**No ejecutes `install.sh` con `sudo`**:
 se instala en tu usuario y pide sudo solo cuando hace falta.
 
 ### 1. Clonar
@@ -240,19 +241,80 @@ si las apps de Nix o Flatpak no salen en el menú, cierra sesión y vuelve a ent
 
 ## 🍎 macOS
 
-Mismo flujo, pero con **Homebrew** en lugar de Nix. En un Mac nuevo:
+Mismo flujo que en Linux, pero con **Homebrew** en lugar de Nix. Todo se instala en tu usuario.
+
+### 1. Requisitos
+
+- macOS con un usuario **administrador**. Hace falta solo para instalar Homebrew la primera vez.
+  Después nada pide sudo, salvo `instalar` con un `.pkg`.
+- En un Mac nuevo no hay `git` hasta instalar las Command Line Tools:
 
 ```bash
-git clone https://github.com/<tu-usuario>/dotfiles.git ~/dotfiles && ~/dotfiles/install.sh
+xcode-select --install
 ```
 
-`install.sh` detecta macOS y usa `mac/install.sh` (compatible con el bash 3.2 del sistema). Los grupos son los mismos
-y cada uno es un `mac/Brewfile.<grupo>`. Si falta Homebrew, ofrece instalarlo (hace falta un usuario administrador).
-Ghostty abre el bash de Homebrew; si tu brew está en `/usr/local` (Mac Intel), cambia `command` en `~/.config/ghostty/os`.
+> Si ya tienes Homebrew, ya tienes las Command Line Tools.
+
+### 2. Clonar
+
+```bash
+git clone https://github.com/<tu-usuario>/dotfiles.git ~/dotfiles
+```
+
+### 3. Instalar
+
+```bash
+~/dotfiles/install.sh                 # pregunta grupo por grupo
+```
+
+```bash
+~/dotfiles/install.sh terminal dev    # solo esos grupos (base siempre va)
+```
+
+```bash
+~/dotfiles/install.sh todo            # todos los grupos
+```
+
+Qué hace:
+
+- Detecta macOS y usa `mac/install.sh` (vale con el bash 3.2 del sistema).
+- Si falta Homebrew, ofrece instalarlo con el script oficial de [brew.sh](https://brew.sh) (pide sudo).
+- Cada grupo es un `mac/Brewfile.<grupo>`.
+- Se puede volver a ejecutar: lo que ya está instalado se salta.
+
+Qué instala cada grupo:
+
+| Grupo | Con Homebrew | Fuera de Homebrew |
+|---|---|---|
+| `base` (siempre) | bash 5, starship, uv, git, gawk, fuente JetBrains Mono Nerd | ble.sh (autosugerencias) con su método oficial, en `~/.local` |
+| `terminal` | Ghostty, fzf, zoxide, eza, bat, ripgrep, fd, btop, tealdeer, glow, jq, yq, dust, duf, hyperfine, direnv, translate-shell, herdr | |
+| `dev` | gh, lazygit, git-delta, difftastic, neovim, tree-sitter-cli, node, pnpm, mise, just, xh, hurl, posting, lazydocker, Zed, OrbStack, Yaak, TablePro | |
+| `ia` | Codex CLI | Ollama como servicio (`brew services`), modelos (pregunta por cada uno), `mlx-lm` opcional (solo Apple Silicon), Claude Code, agy y OpenCode 1 con su instalador oficial (pregunta antes de cada uno) |
+| `documentos` | pandoc, imagemagick, ghostscript, poppler, qpdf, ocrmypdf, tesseract, exiftool, sevenzip, unar, ffmpeg | docling y markitdown con `uv` |
+| `multimedia` | yt-dlp, IINA | |
+| `escritorio` | Rectangle, Maccy | Elgato (Stream Deck y Wave Link) y `mac/defaults.sh`, preguntando |
+
+Al terminar muestra un resumen con los avisos (lo que faltó o falló).
+
+### 4. Después de instalar
+
+1. Abre **Ghostty**. Arranca el bash 5 de Homebrew y `~/.bash_profile` carga `~/.bashrc`.
+2. En un **Mac Intel** (Homebrew en `/usr/local`) cambia `command` en `~/.config/ghostty/os` a `/usr/local/bin/bash --login`. El instalador te avisa.
+3. **Rectangle** y **Maccy** piden permiso de Accesibilidad la primera vez:
+   Ajustes del Sistema → Privacidad y seguridad → Accesibilidad.
+4. Si aplicaste `mac/defaults.sh`, la repetición rápida de teclas se nota tras cerrar sesión y volver a entrar.
+5. Python se usa con mise:
+
+```bash
+mise use -g python
+```
+
+### Equivalencias con Linux
 
 | En Linux | En macOS |
 |---|---|
 | Nix (`packages/nix/`) | Homebrew (`mac/Brewfile.*`); `backup.sh` avisa de lo instalado que no está en ninguno |
+| Agregar un programa | `brew install x` (atajo `bi x`) y anotarlo en el `mac/Brewfile.<grupo>` que toque; `backup.sh` avisa si falta en alguno |
 | Ollama como servicio systemd | `brew services start ollama`, y `mlx-lm` opcional (solo Apple Silicon) |
 | Ulauncher | Nada (sin launcher) |
 | Docker / podman | [OrbStack](https://orbstack.dev) |
@@ -262,7 +324,10 @@ Ghostty abre el bash de Homebrew; si tu brew está en `/usr/local` (Mac Intel), 
 | Tiling Assistant / Tactile | [Rectangle](https://rectangleapp.com) |
 | Ajustes de GNOME (`gnome/apply.sh`) | `mac/defaults.sh` (Finder, teclado, capturas), opcional |
 
-No hay en Mac: GNOME, Ulauncher, EasyEffects / qpwgraph ni Flatpak. Python se usa con mise (`mise use -g python`).
+No hay en Mac: GNOME, Ulauncher, EasyEffects / qpwgraph ni Flatpak.
+
+> El workflow `.github/workflows/macos.yml` prueba `install.sh terminal dev` en un Mac de GitHub y pasa
+> shellcheck, en cada push a `main` que toque `mac/`, `install.sh`, `files.sh` o `.bash*`.
 
 ## 🔄 Guardar cambios
 
